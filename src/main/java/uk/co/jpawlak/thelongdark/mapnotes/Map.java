@@ -7,11 +7,17 @@ import static java.util.Collections.unmodifiableList;
 
 public class Map {
 
+    private final String name;
     private final String imageLocation;
     private final List<Marker> markers = new ArrayList<>();
 
-    public Map(String imageLocation) {
+    public Map(String name, String imageLocation) {
+        this.name = name;
         this.imageLocation = imageLocation;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getImageLocation() {

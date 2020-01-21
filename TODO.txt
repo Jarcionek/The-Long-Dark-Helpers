@@ -1,7 +1,6 @@
 MUST HAVE:
 - removing markers
 - note markers
-- saving markers to file
 - creating new map
 - switching between maps
 

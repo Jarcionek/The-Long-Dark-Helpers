@@ -61,6 +61,7 @@ public class MapPanel extends JLabel {
                         1.0d * event.getY() / mapPanel.getIcon().getIconHeight()
                 );
                 mapPanel.map.addMarker(marker);
+                Serialiser.save(mapPanel.map);
                 mapPanel.createMarkerLabel(marker);
             });
 
