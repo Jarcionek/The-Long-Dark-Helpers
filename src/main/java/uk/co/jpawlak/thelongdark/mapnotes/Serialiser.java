@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Serialiser {
 
@@ -34,6 +36,15 @@ public class Serialiser {
         }
 
         backupFile.delete();
+    }
+
+    public static Map load(String filename) {
+        try {
+            String fileContent = new String(Files.readAllBytes(Paths.get(Main.SAVED_MAPS_FOLDER + "/" + filename)));
+            return GSON.fromJson(fileContent, Map.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
