@@ -10,8 +10,8 @@ public class FileChooser {
     public static File chooseImage(Component parentComponent, File currentDirectoryPath) {
         FileFilter filter = new FileFilter() {
             @Override
-            public boolean accept(File f) {
-                return f.getName().matches("(?i).+\\.(jpg|jpeg|png|gif)");
+            public boolean accept(File file) {
+                return file.isDirectory() || file.getName().matches("(?i).+\\.(jpg|jpeg|png|gif)");
             }
 
             @Override
@@ -26,8 +26,8 @@ public class FileChooser {
     public static File chooseJson(Component parentComponent, File currentDirectoryPath) {
         FileFilter filter = new FileFilter() {
             @Override
-            public boolean accept(File f) {
-                return f.getName().matches("(?i).+\\.(json)");
+            public boolean accept(File file) {
+                return file.isDirectory() || file.getName().matches("(?i).+\\.(json)");
             }
 
             @Override
