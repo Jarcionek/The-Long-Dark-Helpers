@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -21,6 +22,8 @@ public class MapPanel extends JLabel {
         BufferedImage image = loadImage(map.getImageLocation());
         ImageIcon imageIcon = new ImageIcon(image);
         setIcon(imageIcon);
+        setVerticalAlignment(SwingConstants.TOP);
+        //TODO nice to have: if frame is bigger than image, center the image; this requires making sure that markers position are relative to the image
 
         setLayout(null);
         for (Marker marker : map.getMarkers()) {

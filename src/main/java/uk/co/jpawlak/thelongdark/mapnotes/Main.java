@@ -76,7 +76,6 @@ public class Main {
             createMapPanelAndAddToFrame(frame, map);
         });
 
-        //TODO bug: for a small image, if frame is bigger than the image, markers get shifted relatively to the map when resizing the window
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
