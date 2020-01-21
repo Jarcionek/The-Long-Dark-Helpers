@@ -5,8 +5,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -18,42 +16,58 @@ public class MapPanel extends JLabel {
 
     public MapPanel(Map map) {
         this.map = map;
+
         BufferedImage image = loadImage(map.getImageLocation());
         ImageIcon imageIcon = new ImageIcon(image);
         setIcon(imageIcon);
 
-        JLabel mapLabel = new JLabel(imageIcon);
-        mapLabel.setLayout(null);
+        setLayout(null);
 
-        mapLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (e.getButton() != MouseEvent.BUTTON3) {
-                    return;
-                }
+        addMouseListener(new MapMouseListener(this));
+    }
 
-                JMenuItem newMarkerItem = new JMenuItem("New Marker");
-                newMarkerItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e1) {
-                        Marker marker = new Marker(1.0d * e.getX() / imageIcon.getIconWidth(), 1.0d * e.getY() / imageIcon.getIconHeight());
-                        MarkerLabel markerLabel = new MarkerLabel();
-                        markerLabel.setLocation(e.getX(), e.getY()); //TODO should be centered at mouse clicked position
-                        mapLabel.add(markerLabel);
-                    }
-                });
+    private static class MapMouseListener extends MouseAdapter {
 
+        private MapPanel mapPanel;
 
-                JPopupMenu popup = new JPopupMenu();
-                popup.add(newMarkerItem);
-                popup.show(mapLabel, e.getX(), e.getY());
+        public MapMouseListener(MapPanel mapPanel) {
+            this.mapPanel = mapPanel;
+        }
+
+        @Override
+        public void mousePressed(MouseEvent event) {
+            if (event.getButton() != MouseEvent.BUTTON3) {
+                return;
             }
-        });
+
+            JMenuItem newMarkerItem = new JMenuItem("New Marker");
+            newMarkerItem.addActionListener(action -> {
+                Marker marker = new Marker(
+                        1.0d * event.getX() / mapPanel.getIcon().getIconWidth(),
+                        1.0d * event.getY() / mapPanel.getIcon().getIconHeight()
+                );
+                mapPanel.map.addMarker(marker);
+
+                MarkerLabel markerLabel = new MarkerLabel();
+                markerLabel.setLocation(
+                        event.getX() - markerLabel.getWidth() / 2,
+                        event.getY() - markerLabel.getHeight() / 2
+                );
+
+                mapPanel.add(markerLabel);
+                mapPanel.repaint();
+            });
+
+            JPopupMenu popup = new JPopupMenu();
+            popup.add(newMarkerItem);
+            popup.show(mapPanel, event.getX(), event.getY());
+        }
+
     }
 
     private static BufferedImage loadImage(String path) {
         try {
-            return ImageIO.read(MapNotes.class.getResource(path));
+            return ImageIO.read(MapPanel.class.getResource(path));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

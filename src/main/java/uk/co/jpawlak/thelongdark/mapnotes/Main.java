@@ -3,7 +3,7 @@ package uk.co.jpawlak.thelongdark.mapnotes;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-public class MapNotes {
+public class Main {
 
     public static final int SCROLL_SENSITIVITY = 15;
 
