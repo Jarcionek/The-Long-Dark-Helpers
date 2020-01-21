@@ -54,21 +54,27 @@ public class MapPanel extends JLabel {
                 return;
             }
 
-            JMenuItem newMarkerItem = new JMenuItem("New Marker");
+            JPopupMenu popup = new JPopupMenu();
+            popup.add(newMenuItem("Done",    Marker.Type.TICK,    event.getX(), event.getY()));
+            popup.add(newMenuItem("Warning", Marker.Type.WARNING, event.getX(), event.getY()));
+            popup.add(newMenuItem("Unknown", Marker.Type.UNKNOWN, event.getX(), event.getY()));
+            popup.add(newMenuItem("Cross",   Marker.Type.CROSS,   event.getX(), event.getY()));
+            popup.show(mapPanel, event.getX(), event.getY());
+        }
+
+        private JMenuItem newMenuItem(String name, Marker.Type markerType, int x, int y) {
+            JMenuItem newMarkerItem = new JMenuItem(name);
             newMarkerItem.addActionListener(action -> {
                 Marker marker = new Marker(
-                        Marker.Type.TICK,
-                        1.0d * event.getX() / mapPanel.getIcon().getIconWidth(),
-                        1.0d * event.getY() / mapPanel.getIcon().getIconHeight()
+                        markerType,
+                        1.0d * x / mapPanel.getIcon().getIconWidth(),
+                        1.0d * y / mapPanel.getIcon().getIconHeight()
                 );
                 mapPanel.map.addMarker(marker);
                 Serialiser.save(mapPanel.map);
                 mapPanel.createMarkerLabel(marker);
             });
-
-            JPopupMenu popup = new JPopupMenu();
-            popup.add(newMarkerItem);
-            popup.show(mapPanel, event.getX(), event.getY());
+            return newMarkerItem;
         }
 
     }
