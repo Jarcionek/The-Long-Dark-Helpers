@@ -1,12 +1,12 @@
 package uk.co.jpawlak.thelongdark.mapnotes;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
 import java.io.File;
 
 public class Main {
@@ -22,6 +22,12 @@ public class Main {
         SAVED_MAPS_FOLDER.mkdirs();
         MAPS_IMAGES_FOLDER.mkdirs();
 
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println("Failed to set look and feel " + e.toString());
+        }
+
         JFrame frame = new JFrame();
 
         JMenuBar menuBar = new JMenuBar();
@@ -33,17 +39,24 @@ public class Main {
         JMenuItem newMapMenuItem = new JMenuItem("New");
         mapMenu.add(newMapMenuItem);
         newMapMenuItem.addActionListener(action -> {
-            JFileChooser fileChooser = new JFileChooser(MAPS_IMAGES_FOLDER);
-            //TODO single file selection
-            //TODO system look and feel
-            //TODO filetype filter
-            int returnValue = fileChooser.showOpenDialog(frame);
-            if (returnValue != JFileChooser.APPROVE_OPTION) {
+            File selectedFile = FileChooser.chooseImage(frame, MAPS_IMAGES_FOLDER);
+            if (selectedFile == null) {
                 return;
             }
-            File selectedFile = fileChooser.getSelectedFile();
+
             //TODO if file is not in "Maps Images" folder, copy it there
-            String name = JOptionPane.showInputDialog(frame, "Name the map", selectedFile.getName().replaceFirst("\\..*", ""));
+
+            String name = (String) JOptionPane.showInputDialog(
+                    frame,
+                    "Name the map",
+                    "New map",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    selectedFile.getName().replaceFirst("\\..*", "")
+            );
+            //TODO check for name collision
+            //TODO save it
             Map map = new Map(name, selectedFile.getPath());
             createMapPanelAndAddToFrame(frame, map);
         });
@@ -51,12 +64,11 @@ public class Main {
         JMenuItem loadMapMenuItem = new JMenuItem("Load");
         mapMenu.add(loadMapMenuItem);
         loadMapMenuItem.addActionListener(action -> {
-            JFileChooser fileChooser = new JFileChooser(SAVED_MAPS_FOLDER);
-            int returnValue = fileChooser.showOpenDialog(frame);
-            if (returnValue != JFileChooser.APPROVE_OPTION) {
+            File selectedFile = FileChooser.chooseJson(frame, SAVED_MAPS_FOLDER);
+            if (selectedFile == null) {
                 return;
             }
-            File selectedFile = fileChooser.getSelectedFile();
+
             Map map = MapSerialiser.load(selectedFile);
             createMapPanelAndAddToFrame(frame, map);
         });
