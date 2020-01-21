@@ -21,6 +21,7 @@ public class Main {
         MAIN_FOLDER.mkdirs();
         SAVED_MAPS_FOLDER.mkdirs();
         MAPS_IMAGES_FOLDER.mkdirs();
+        //TODO nice to have: if folder was created, copy maps from resource into there
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -44,7 +45,7 @@ public class Main {
                 return;
             }
 
-            //TODO if file is not in "Maps Images" folder, copy it there
+            //TODO nice to have: if file is not in "Maps Images" folder, copy it there
 
             String name = (String) JOptionPane.showInputDialog(
                     frame,
@@ -55,9 +56,11 @@ public class Main {
                     null,
                     selectedFile.getName().replaceFirst("\\..*", "")
             );
-            //TODO check for name collision
-            //TODO save it
-            Map map = new Map(name, selectedFile.getPath());
+
+            //TODO nice to have: check for name collision
+
+            Map map = new Map(name, selectedFile.getPath()); //TODO nice to have: path relative to Maps Images folder
+            MapSerialiser.save(map);
             createMapPanelAndAddToFrame(frame, map);
         });
 

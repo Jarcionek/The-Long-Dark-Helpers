@@ -1,8 +1,6 @@
 MUST HAVE:
 - removing markers
 - note markers
-- creating new map
-- switching between maps
 
 NICE TO HAVE:
 - nice icons for markers
