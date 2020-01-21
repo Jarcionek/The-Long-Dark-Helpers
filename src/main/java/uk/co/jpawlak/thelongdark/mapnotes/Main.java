@@ -1,6 +1,11 @@
 package uk.co.jpawlak.thelongdark.mapnotes;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import java.io.File;
 
@@ -10,25 +15,66 @@ public class Main {
 
     public static final File MAIN_FOLDER = new File(System.getProperty("user.dir"), "The Long Dark Helpers");
     public static final File SAVED_MAPS_FOLDER = new File(MAIN_FOLDER, "Maps");
+    public static final File MAPS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Maps Images");
 
     public static void main(String[] args) {
         MAIN_FOLDER.mkdirs();
         SAVED_MAPS_FOLDER.mkdirs();
+        MAPS_IMAGES_FOLDER.mkdirs();
 
         JFrame frame = new JFrame();
 
-        MapPanel mapPanel = new MapPanel(new Map("Ravine", "/regionimages/Ravine.png"));
+        JMenuBar menuBar = new JMenuBar();
+        frame.setJMenuBar(menuBar);
 
+        JMenu mapMenu = new JMenu("Map");
+        menuBar.add(mapMenu);
+
+        JMenuItem newMapMenuItem = new JMenuItem("New");
+        mapMenu.add(newMapMenuItem);
+        newMapMenuItem.addActionListener(action -> {
+            JFileChooser fileChooser = new JFileChooser(MAPS_IMAGES_FOLDER);
+            //TODO single file selection
+            //TODO system look and feel
+            //TODO filetype filter
+            int returnValue = fileChooser.showOpenDialog(frame);
+            if (returnValue != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            File selectedFile = fileChooser.getSelectedFile();
+            //TODO if file is not in "Maps Images" folder, copy it there
+            String name = JOptionPane.showInputDialog(frame, "Name the map", selectedFile.getName().replaceFirst("\\..*", ""));
+            Map map = new Map(name, selectedFile.getPath());
+            createMapPanelAndAddToFrame(frame, map);
+        });
+
+        JMenuItem loadMapMenuItem = new JMenuItem("Load");
+        mapMenu.add(loadMapMenuItem);
+        loadMapMenuItem.addActionListener(action -> {
+            JFileChooser fileChooser = new JFileChooser(SAVED_MAPS_FOLDER);
+            int returnValue = fileChooser.showOpenDialog(frame);
+            if (returnValue != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            File selectedFile = fileChooser.getSelectedFile();
+            Map map = MapSerialiser.load(selectedFile);
+            createMapPanelAndAddToFrame(frame, map);
+        });
+
+        //TODO bug: for a small image, if frame is bigger than the image, markers get shifted relatively to the map when resizing the window
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    private static void createMapPanelAndAddToFrame(JFrame frame, Map map) {
+        MapPanel mapPanel = new MapPanel(map);
         JScrollPane scrollPane = new JScrollPane(mapPanel);
         scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_SENSITIVITY);
         scrollPane.getHorizontalScrollBar().setUnitIncrement(SCROLL_SENSITIVITY);
-
         frame.setContentPane(scrollPane);
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        frame.revalidate();
     }
 
 }

@@ -8,6 +8,7 @@ import javax.swing.JPopupMenu;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class MapPanel extends JLabel {
@@ -71,7 +72,7 @@ public class MapPanel extends JLabel {
                         1.0d * y / mapPanel.getIcon().getIconHeight()
                 );
                 mapPanel.map.addMarker(marker);
-                Serialiser.save(mapPanel.map);
+                MapSerialiser.save(mapPanel.map);
                 mapPanel.createMarkerLabel(marker);
             });
             return newMarkerItem;
@@ -81,9 +82,9 @@ public class MapPanel extends JLabel {
 
     private static BufferedImage loadImage(String path) {
         try {
-            return ImageIO.read(MapPanel.class.getResource(path));
+            return ImageIO.read(new File(path));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(path, e);
         }
     }
 
