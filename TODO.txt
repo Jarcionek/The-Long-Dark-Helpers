@@ -1,0 +1,15 @@
+MUST HAVE:
+- removing markers
+- note markers
+- saving markers to file
+- creating new map
+- switching between maps
+
+NICE TO HAVE:
+- nice icons for markers
+- connector markers (clicking them will switch to another map)
+    - open map at position of connector
+    - warning when map A has connector to map B, but map B doesn't have connector to map A
+    - handle multiple connectors to the same map (needed for some caves)
+- zooming in and out (considering mouse pointer position)
+- move map by dragging
