@@ -22,8 +22,22 @@ public class MapPanel extends JLabel {
         setIcon(imageIcon);
 
         setLayout(null);
+        for (Marker marker : map.getMarkers()) {
+            createMarkerLabel(marker);
+        }
 
         addMouseListener(new MapMouseListener(this));
+    }
+
+    private void createMarkerLabel(Marker marker) {
+        MarkerLabel markerLabel = new MarkerLabel();
+        markerLabel.setLocation(
+                (int) (marker.getX() * getIcon().getIconWidth()  - markerLabel.getWidth()  / 2.0d),
+                (int) (marker.getY() * getIcon().getIconHeight() - markerLabel.getHeight() / 2.0d)
+        );
+
+        add(markerLabel);
+        repaint();
     }
 
     private static class MapMouseListener extends MouseAdapter {
@@ -47,15 +61,7 @@ public class MapPanel extends JLabel {
                         1.0d * event.getY() / mapPanel.getIcon().getIconHeight()
                 );
                 mapPanel.map.addMarker(marker);
-
-                MarkerLabel markerLabel = new MarkerLabel();
-                markerLabel.setLocation(
-                        event.getX() - markerLabel.getWidth() / 2,
-                        event.getY() - markerLabel.getHeight() / 2
-                );
-
-                mapPanel.add(markerLabel);
-                mapPanel.repaint();
+                mapPanel.createMarkerLabel(marker);
             });
 
             JPopupMenu popup = new JPopupMenu();
