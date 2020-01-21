@@ -29,9 +29,14 @@ public class MapPanel extends JLabel {
         for (Marker marker : map.getMarkers()) {
             createMarkerLabel(marker);
         }
+        for (Note note : map.getNotes()) {
+            createNoteLabel(note);
+        }
 
         addMouseListener(new MapMouseListener(this));
     }
+
+    //TODO remove all that duplication between creating notes and markers
 
     private void createMarkerLabel(Marker marker) {
         MarkerLabel markerLabel = new MarkerLabel(marker);
@@ -64,6 +69,37 @@ public class MapPanel extends JLabel {
         repaint();
     }
 
+    private void createNoteLabel(Note note) {
+        NoteLabel noteLabel = new NoteLabel(note);
+        noteLabel.setLocation(
+                (int) (note.getX() * getIcon().getIconWidth()  - noteLabel.getWidth()  / 2.0d),
+                (int) (note.getY() * getIcon().getIconHeight() - noteLabel.getHeight() / 2.0d)
+        );
+        noteLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent event) {
+                if (event.getButton() != MouseEvent.BUTTON3) {
+                    return;
+                }
+
+                JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");
+                deleteMarkerMenuItem.addActionListener(action -> {
+                    MapPanel.this.remove(noteLabel);
+                    map.removeNote(note);
+                    repaint();
+                    MapSerialiser.save(map);
+                });
+
+                JPopupMenu popup = new JPopupMenu();
+                popup.add(deleteMarkerMenuItem);
+                popup.show(noteLabel, event.getX(), event.getY());
+            }
+        });
+
+        add(noteLabel);
+        repaint();
+    }
+
     private static class MapMouseListener extends MouseAdapter {
 
         private MapPanel mapPanel;
@@ -79,14 +115,29 @@ public class MapPanel extends JLabel {
             }
 
             JPopupMenu popup = new JPopupMenu();
-            popup.add(newMenuItem("Done",    Marker.Type.TICK,    event.getX(), event.getY()));
-            popup.add(newMenuItem("Warning", Marker.Type.WARNING, event.getX(), event.getY()));
-            popup.add(newMenuItem("Unknown", Marker.Type.UNKNOWN, event.getX(), event.getY()));
-            popup.add(newMenuItem("Cross",   Marker.Type.CROSS,   event.getX(), event.getY()));
+            popup.add(newNoteMenuItem(event.getX(), event.getY()));
+            popup.add(newMarkerMenuItem("Done",    Marker.Type.TICK,    event.getX(), event.getY()));
+            popup.add(newMarkerMenuItem("Warning", Marker.Type.WARNING, event.getX(), event.getY()));
+            popup.add(newMarkerMenuItem("Unknown", Marker.Type.UNKNOWN, event.getX(), event.getY()));
+            popup.add(newMarkerMenuItem("Cross",   Marker.Type.CROSS,   event.getX(), event.getY()));
             popup.show(mapPanel, event.getX(), event.getY());
         }
 
-        private JMenuItem newMenuItem(String name, Marker.Type markerType, int x, int y) {
+        private JMenuItem newNoteMenuItem(int x, int y) {
+            JMenuItem newMarkerItem = new JMenuItem("Note");
+            newMarkerItem.addActionListener(action -> {
+                Note note = new Note(
+                        1.0d * x / mapPanel.getIcon().getIconWidth(),
+                        1.0d * y / mapPanel.getIcon().getIconHeight()
+                );
+                mapPanel.map.addNote(note);
+                MapSerialiser.save(mapPanel.map);
+                mapPanel.createNoteLabel(note);
+            });
+            return newMarkerItem;
+        }
+
+        private JMenuItem newMarkerMenuItem(String name, Marker.Type markerType, int x, int y) {
             JMenuItem newMarkerItem = new JMenuItem(name);
             newMarkerItem.addActionListener(action -> {
                 Marker marker = new Marker(
