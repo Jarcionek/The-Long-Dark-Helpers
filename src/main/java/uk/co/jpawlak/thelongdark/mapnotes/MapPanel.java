@@ -4,7 +4,10 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -41,7 +44,7 @@ public class MapPanel extends JLabel {
     private void createMarkerLabel(Marker marker) {
         MarkerLabel markerLabel = new MarkerLabel(marker);
         markerLabel.setLocation(
-                (int) (marker.getX() * getIcon().getIconWidth()  - markerLabel.getWidth()  / 2.0d),
+                (int) (marker.getX() * getIcon().getIconWidth() - markerLabel.getWidth() / 2.0d),
                 (int) (marker.getY() * getIcon().getIconHeight() - markerLabel.getHeight() / 2.0d)
         );
         markerLabel.addMouseListener(new MouseAdapter() {
@@ -72,27 +75,31 @@ public class MapPanel extends JLabel {
     private void createNoteLabel(Note note) {
         NoteLabel noteLabel = new NoteLabel(note);
         noteLabel.setLocation(
-                (int) (note.getX() * getIcon().getIconWidth()  - noteLabel.getWidth()  / 2.0d),
+                (int) (note.getX() * getIcon().getIconWidth() - noteLabel.getWidth() / 2.0d),
                 (int) (note.getY() * getIcon().getIconHeight() - noteLabel.getHeight() / 2.0d)
         );
         noteLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent event) {
-                if (event.getButton() != MouseEvent.BUTTON3) {
-                    return;
-                }
-
-                JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");
-                deleteMarkerMenuItem.addActionListener(action -> {
-                    MapPanel.this.remove(noteLabel);
-                    map.removeNote(note);
-                    repaint();
+                if (event.getButton() == MouseEvent.BUTTON1) {
+                    JTextArea textArea = new JTextArea(note.getText(), 40, 60); //TODO this should be more flexible
+                    JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Note", JOptionPane.PLAIN_MESSAGE); //TODO should be relative to frame
+                    note.setText(textArea.getText());
                     MapSerialiser.save(map);
-                });
+                }
+                if (event.getButton() == MouseEvent.BUTTON3) {
+                    JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");
+                    deleteMarkerMenuItem.addActionListener(action -> {
+                        MapPanel.this.remove(noteLabel);
+                        map.removeNote(note);
+                        repaint();
+                        MapSerialiser.save(map);
+                    });
 
-                JPopupMenu popup = new JPopupMenu();
-                popup.add(deleteMarkerMenuItem);
-                popup.show(noteLabel, event.getX(), event.getY());
+                    JPopupMenu popup = new JPopupMenu();
+                    popup.add(deleteMarkerMenuItem);
+                    popup.show(noteLabel, event.getX(), event.getY());
+                }
             }
         });
 
@@ -116,10 +123,10 @@ public class MapPanel extends JLabel {
 
             JPopupMenu popup = new JPopupMenu();
             popup.add(newNoteMenuItem(event.getX(), event.getY()));
-            popup.add(newMarkerMenuItem("Done",    Marker.Type.TICK,    event.getX(), event.getY()));
+            popup.add(newMarkerMenuItem("Done", Marker.Type.TICK, event.getX(), event.getY()));
             popup.add(newMarkerMenuItem("Warning", Marker.Type.WARNING, event.getX(), event.getY()));
             popup.add(newMarkerMenuItem("Unknown", Marker.Type.UNKNOWN, event.getX(), event.getY()));
-            popup.add(newMarkerMenuItem("Cross",   Marker.Type.CROSS,   event.getX(), event.getY()));
+            popup.add(newMarkerMenuItem("Cross", Marker.Type.CROSS, event.getX(), event.getY()));
             popup.show(mapPanel, event.getX(), event.getY());
         }
 

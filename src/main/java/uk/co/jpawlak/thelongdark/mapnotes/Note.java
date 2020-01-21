@@ -2,18 +2,23 @@ package uk.co.jpawlak.thelongdark.mapnotes;
 
 public class Note {
 
-    private final String text;
     private final double x;
     private final double y;
 
+    private String text;
+
     public Note(double x, double y) {
-        this.text = "";
         this.x = x;
         this.y = y;
+        this.text = "";
     }
 
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public double getX() {
