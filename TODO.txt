@@ -1,5 +1,4 @@
 MUST HAVE:
-- removing markers
 - note markers
 
 NICE TO HAVE:

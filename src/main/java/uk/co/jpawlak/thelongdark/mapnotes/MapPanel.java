@@ -39,6 +39,26 @@ public class MapPanel extends JLabel {
                 (int) (marker.getX() * getIcon().getIconWidth()  - markerLabel.getWidth()  / 2.0d),
                 (int) (marker.getY() * getIcon().getIconHeight() - markerLabel.getHeight() / 2.0d)
         );
+        markerLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent event) {
+                if (event.getButton() != MouseEvent.BUTTON3) {
+                    return;
+                }
+
+                JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");
+                deleteMarkerMenuItem.addActionListener(action -> {
+                    MapPanel.this.remove(markerLabel);
+                    map.removeMarker(marker);
+                    repaint();
+                    MapSerialiser.save(map);
+                });
+
+                JPopupMenu popup = new JPopupMenu();
+                popup.add(deleteMarkerMenuItem);
+                popup.show(markerLabel, event.getX(), event.getY());
+            }
+        });
 
         add(markerLabel);
         repaint();
