@@ -30,7 +30,7 @@ public class MapPanel extends JLabel {
     }
 
     private void createMarkerLabel(Marker marker) {
-        MarkerLabel markerLabel = new MarkerLabel();
+        MarkerLabel markerLabel = new MarkerLabel(marker);
         markerLabel.setLocation(
                 (int) (marker.getX() * getIcon().getIconWidth()  - markerLabel.getWidth()  / 2.0d),
                 (int) (marker.getY() * getIcon().getIconHeight() - markerLabel.getHeight() / 2.0d)
@@ -57,6 +57,7 @@ public class MapPanel extends JLabel {
             JMenuItem newMarkerItem = new JMenuItem("New Marker");
             newMarkerItem.addActionListener(action -> {
                 Marker marker = new Marker(
+                        Marker.Type.TICK,
                         1.0d * event.getX() / mapPanel.getIcon().getIconWidth(),
                         1.0d * event.getY() / mapPanel.getIcon().getIconHeight()
                 );
