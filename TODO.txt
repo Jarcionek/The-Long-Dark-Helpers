@@ -1,8 +1,3 @@
-MUST HAVE:
-- note markers
-
-NICE TO HAVE:
-- nice icons for markers
 - connector markers (clicking them will switch to another map)
     - open map at position of connector
     - warning when map A has connector to map B, but map B doesn't have connector to map A
