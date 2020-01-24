@@ -9,7 +9,8 @@ read version
 
 # UPDATE VERSIONS
 sed -i "s|^    <version>.*</version>|    <version>${version}</version>|" pom.xml
-git add pom.xml
+sed -i "1s|^.*$|##### ${version} (`date +%d/%m/%Y`)|" CHANGELOG.md
+git add pom.xml CHANGELOG.md
 git commit -m "prepare release ${version}"
 git tag "${version}"
 
@@ -20,7 +21,8 @@ mvn package
 # PREPARE FOR NEXT ITERATION
 nextVersion=$((${version%%.*} + 1)).0
 sed -i "s|^    <version>.*</version>|    <version>${nextVersion}-SNAPSHOT</version>|" pom.xml
-git add pom.xml
+sed -i "1s|^|##### ${nextVersion} (not yet released)\n\n|" CHANGELOG.md
+git add pom.xml CHANGELOG.md
 git commit -m "prepare for next development iteration"
 
 # GIT PUSH
