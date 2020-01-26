@@ -1,3 +1,17 @@
+MARKERS IMPROVEMENTS:
+- allow to add custom icons by adding images to the folder
+- on first run, copy existing icons into the folder
+- merge Marker and Note classes, allow notes on both
+- handle folders - create JMenus for them
+- allow to change the icon of existing marker
+- handle missing image files
+- save migration
+- more icons:
+    - resources (wood, coal, cloth, scrap metal, car battery)
+    - danger (bear, wolf, moose)
+    - hunting ground (rabbit, deer)
+    - collectibles (cairn)
+
 - connector markers (clicking them will switch to another map)
     - open map at position of connector
     - warning when map A has connector to map B, but map B doesn't have connector to map A
