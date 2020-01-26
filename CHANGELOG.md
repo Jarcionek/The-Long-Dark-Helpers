@@ -1,6 +1,6 @@
 ##### 2.0 (not yet released)
 
-* an error message is shown when attempting to create a new map with the same name as already existing one
+* an error message is now shown when attempting to create a new map with the same name as already existing one
 
 ##### 1.1 (26/01/2020)
 
