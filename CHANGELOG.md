@@ -1,6 +1,7 @@
 ##### 1.1 (not yet released)
 
 * added image icons for markers
+* fixed a bug which was making it impossible to create a new map
 
 ##### 1.0 (21/01/2020)
 

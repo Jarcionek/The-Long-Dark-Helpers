@@ -16,7 +16,8 @@ git tag "${version}"
 
 # BUILD THE ARTIFACTS
 rm -rf target/
-mvn package
+mvn clean compile assembly:single
+mv "target/TheLongDarkHelpers-${version}-jar-with-dependencies.jar" "target/TheLongDarkHelpers-${version}.jar"
 
 # PREPARE FOR NEXT ITERATION
 nextVersion=$((${version%%.*} + 1)).0
@@ -26,4 +27,5 @@ git add pom.xml CHANGELOG.md
 git commit -m "prepare for next development iteration"
 
 # GIT PUSH
+echo "MANUAL STEP REQUIRED!!!!!"
 echo "git push && git push --tags"
