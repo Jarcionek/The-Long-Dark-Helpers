@@ -1,3 +1,5 @@
+##### 2.0 (not yet released)
+
 ##### 1.1 (26/01/2020)
 
 * added image icons for markers
