@@ -57,7 +57,10 @@ public class Main {
                     selectedFile.getName().replaceFirst("\\..*", "")
             );
 
-            //TODO nice to have: check for name collision
+            if (MapSerialiser.exists(name)) {
+                JOptionPane.showMessageDialog(frame, "Name already exists!", "New map", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             Map map = new Map(name, selectedFile.getPath()); //TODO nice to have: path relative to Maps Images folder
             MapSerialiser.save(map);

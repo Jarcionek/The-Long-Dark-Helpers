@@ -13,6 +13,10 @@ public class MapSerialiser {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
+    public static boolean exists(String name) {
+        return new File(Main.SAVED_MAPS_FOLDER, name + ".json").exists();
+    }
+
     public static void save(Map map) {
         File file = new File(Main.SAVED_MAPS_FOLDER, map.getName() + ".json");
         File backupFile = new File(Main.SAVED_MAPS_FOLDER, map.getName() + ".json.backup");
