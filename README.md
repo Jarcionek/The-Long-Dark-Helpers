@@ -11,6 +11,8 @@ Right click anywhere to place a new marker.
 
 Left or right click an existing marker to interact with it.
 
+![Screenshot](Screenshot.PNG "Screenshot")
+
 ## Installation
 
 Simply download and run jar file. You need to have Java installed.
