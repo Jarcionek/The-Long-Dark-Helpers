@@ -1,3 +1,5 @@
+##### 2.0 (not yet released)
+
 ##### 1.2 (30/01/2020)
 
 * saved map format has been changed, all the maps will be migrated to new format on application startup
