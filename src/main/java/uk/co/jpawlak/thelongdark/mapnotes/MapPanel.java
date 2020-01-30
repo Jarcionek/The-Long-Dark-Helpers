@@ -53,7 +53,8 @@ public class MapPanel extends JLabel {
                 if (event.getButton() == MouseEvent.BUTTON1) {
                     JTextArea textArea = new JTextArea(marker.getNote(), 40, 60); //TODO this should be more flexible
                     JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Note", JOptionPane.PLAIN_MESSAGE); //TODO should be relative to frame
-                    marker.setNote(textArea.getText()); //TODO trim it and if empty, set null instead so that it is not serialised
+                    String newText = textArea.getText();
+                    marker.setNote(newText.trim().isEmpty() ? null : newText);
                     MapSerialiser.save(map);
                 }
                 if (event.getButton() == MouseEvent.BUTTON3) {
