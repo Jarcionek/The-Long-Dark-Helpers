@@ -15,7 +15,7 @@ Left or right click an existing marker to interact with it.
 
 ## Installation
 
-Simply download and run jar file. You need to have Java installed.
+Simply download and run jar file. You need to have [Java](https://www.java.com/en/download/) installed.
 
 ## Releases
 
