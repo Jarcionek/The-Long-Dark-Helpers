@@ -8,6 +8,7 @@
 * added maps images of all regions and some caves/connectors so that you don't have to download them manually
     * these will be only copied if "The Long Dark Helpers/Maps Images" folder doesn't exist yet
 * markers images are now loaded from "The Long Dark Helpers/Markers Images" folder. You can add your own!
+* it is now possible to change the image of an existing marker
 
 ##### 1.1 (26/01/2020)
 

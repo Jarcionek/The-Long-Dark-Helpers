@@ -7,12 +7,14 @@ import uk.co.jpawlak.thelongdark.mapnotes.serializable.Marker;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -43,10 +45,7 @@ public class MapPanel extends JLabel {
 
     private void createMarkerLabel(Marker marker) {
         MarkerLabel markerLabel = new MarkerLabel(marker);
-        markerLabel.setLocation(
-                (int) (marker.getX() * getIcon().getIconWidth() - markerLabel.getWidth() / 2.0d),
-                (int) (marker.getY() * getIcon().getIconHeight() - markerLabel.getHeight() / 2.0d)
-        );
+        markerLabel.setLocation(calculatedLocationFor(marker, markerLabel));
         markerLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent event) {
@@ -60,14 +59,25 @@ public class MapPanel extends JLabel {
                 if (event.getButton() == MouseEvent.BUTTON3) {
                     JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");
                     deleteMarkerMenuItem.addActionListener(action -> {
+                        //TODO to consider: confirmation popup if there is a note?
                         MapPanel.this.remove(markerLabel);
                         map.removeMarker(marker);
                         repaint();
                         MapSerialiser.save(map);
                     });
 
+                    JMenu changeIconMenu = new JMenu("Change icon");
+                    Consumer<String> clickCallback = imageLocation -> {
+                        marker.setImageLocation(imageLocation);
+                        markerLabel.setMarkerIcon(marker);
+                        markerLabel.setLocation(calculatedLocationFor(marker, markerLabel));
+                        MapSerialiser.save(map);
+                    };
+                    MarkersMenuItemsLoader.createFromFiles(clickCallback).forEach(changeIconMenu::add);
+
                     JPopupMenu popup = new JPopupMenu();
                     popup.add(deleteMarkerMenuItem);
+                    popup.add(changeIconMenu);
                     popup.show(markerLabel, event.getX(), event.getY());
                 }
             }
@@ -75,6 +85,13 @@ public class MapPanel extends JLabel {
 
         add(markerLabel);
         repaint();
+    }
+
+    private Point calculatedLocationFor(Marker marker, MarkerLabel markerLabel) {
+        return new Point(
+                (int) (marker.getX() * getIcon().getIconWidth() - markerLabel.getWidth() / 2.0d),
+                (int) (marker.getY() * getIcon().getIconHeight() - markerLabel.getHeight() / 2.0d)
+        );
     }
 
     private static class MapMouseListener extends MouseAdapter {

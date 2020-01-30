@@ -14,10 +14,14 @@ import java.net.MalformedURLException;
 public class MarkerLabel extends JLabel {
 
     public MarkerLabel(Marker marker) {
+        setOpaque(false);
+        setMarkerIcon(marker);
+    }
+
+    public void setMarkerIcon(Marker marker) {
         ImageIcon icon = icon(marker.getImageLocation());
         setSize(icon.getIconWidth(), icon.getIconHeight());
         setIcon(icon);
-        setOpaque(false);
     }
 
     private ImageIcon icon(String imageLocation) {

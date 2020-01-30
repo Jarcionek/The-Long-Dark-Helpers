@@ -31,6 +31,10 @@ public class Marker {
         return imageLocation;
     }
 
+    public void setImageLocation(String imageLocation) {
+        this.imageLocation = imageLocation;
+    }
+
     public String getNote() {
         return note;
     }
