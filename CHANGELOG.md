@@ -1,5 +1,7 @@
 ##### 2.0 (not yet released)
 
+* saved map format has been changed, all the maps will be migrated to new format on application startup
+* your maps are now backed up on every application startup (before migration)
 * an error message is now shown when attempting to create a new map with the same name as already existing one
 * added maps images of all regions and some caves/connectors so that you don't have to download them manually
     * these will be only copied if "The Long Dark Helpers/Maps Images" folder doesn't exist yet

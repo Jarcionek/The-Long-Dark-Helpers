@@ -42,6 +42,9 @@ public class Map {
 
     void migrate() {
         markers.forEach(Marker::migrate);
+        if (notes == null) { // so that migrating from new format to itself doesn't throw NPE
+            return;
+        }
         notes.stream()
                 .map(note -> new Marker(note.getX(), note.getY(), "Note.png", note.getText()))
                 .forEach(markers::add);

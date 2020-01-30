@@ -15,10 +15,14 @@ public class MapSerialiser {
 
     }
 
-    public static Map load(File file) {
-        Map map = Serialiser.load(file, Map.class);
+    public static Map loadAndMigrate(File file) {
+        Map map = load(file);
         map.migrate();
         return map;
+    }
+
+    public static Map load(File file) {
+        return Serialiser.load(file, Map.class);
     }
 
 }

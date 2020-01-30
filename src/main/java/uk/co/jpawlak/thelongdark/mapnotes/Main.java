@@ -14,6 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -29,18 +32,32 @@ public class Main {
 
     public static void main(String[] args) {
         MAIN_FOLDER.mkdirs();
-        SAVED_MAPS_FOLDER.mkdirs();
+
+        if (!SAVED_MAPS_FOLDER.mkdirs()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
+            LocalDateTime localDateTime = LocalDateTime.now();
+            String dateTime = localDateTime.format(formatter);
+
+            File allBackupsFolder = new File(MAIN_FOLDER, "Maps backups");
+            File backupFolder = new File(allBackupsFolder, dateTime);
+            backupFolder.mkdirs();
+            copyDirectory(SAVED_MAPS_FOLDER, backupFolder);
+        }
+
         if (MAPS_IMAGES_FOLDER.mkdirs()) {
-            copyDirectory("/maps/", MAPS_IMAGES_FOLDER);
+            copyResourcesToFolder("/maps/", MAPS_IMAGES_FOLDER);
         }
 
         if (MARKERS_IMAGES_FOLDER.mkdirs()) {
-            copyDirectory("/icons/", MARKERS_IMAGES_FOLDER);
+            copyResourcesToFolder("/icons/", MARKERS_IMAGES_FOLDER);
         }
 
-        //TODO migrate all saves!
-        
-        SettingsSerialiser.save(new Settings(VERSION));
+        if (!SettingsSerialiser.settingsExist()) { // saves migration from 1.1
+            Stream.of(SAVED_MAPS_FOLDER.listFiles())
+                    .map(MapSerialiser::loadAndMigrate)
+                    .forEach(MapSerialiser::save);
+            SettingsSerialiser.save(new Settings(VERSION));
+        }
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -113,7 +130,7 @@ public class Main {
         frame.revalidate();
     }
 
-    private static void copyDirectory(String srcDir, File destDir) {
+    private static void copyResourcesToFolder(String srcDir, File destDir) {
         try {
             FileUtils.copyDirectory(new File(Main.class.getResource(srcDir).toURI()), destDir);
         } catch (Exception e) {
@@ -121,5 +138,12 @@ public class Main {
         }
     }
 
+    private static void copyDirectory(File srcDir, File destDir) {
+        try {
+            FileUtils.copyDirectory(srcDir, destDir);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
