@@ -1,5 +1,6 @@
 package uk.co.jpawlak.thelongdark.mapnotes;
 
+import org.apache.commons.io.FileUtils;
 import uk.co.jpawlak.thelongdark.mapnotes.serializable.Map;
 import uk.co.jpawlak.thelongdark.mapnotes.serializable.MapSerialiser;
 import uk.co.jpawlak.thelongdark.mapnotes.serializable.Settings;
@@ -21,6 +22,7 @@ public class Main {
     public static final File MAIN_FOLDER = new File(System.getProperty("user.dir"), "The Long Dark Helpers");
     public static final File SAVED_MAPS_FOLDER = new File(MAIN_FOLDER, "Maps");
     public static final File MAPS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Maps Images");
+    public static final File MARKERS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Markers Images");
 
     public static final String VERSION = "2.0"; //TODO this should be in properties file - https://stackoverflow.com/questions/3697449
     //TODO add missing minor version (update release script to increment minor version, rather than major)
@@ -30,6 +32,10 @@ public class Main {
         SAVED_MAPS_FOLDER.mkdirs();
         MAPS_IMAGES_FOLDER.mkdirs();
         //TODO nice to have: if folder was created, copy maps from resource into there
+
+        if (MARKERS_IMAGES_FOLDER.mkdirs()) {
+            copyDirectory("/icons/", MARKERS_IMAGES_FOLDER);
+        }
 
         SettingsSerialiser.save(new Settings(VERSION));
 
@@ -103,5 +109,14 @@ public class Main {
         frame.setContentPane(scrollPane);
         frame.revalidate();
     }
+
+    private static void copyDirectory(String srcDir, File destDir) {
+        try {
+            FileUtils.copyDirectory(new File(Main.class.getResource(srcDir).toURI()), destDir);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
