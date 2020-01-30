@@ -14,8 +14,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Main {
@@ -27,8 +34,8 @@ public class Main {
     public static final File MAPS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Maps Images");
     public static final File MARKERS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Markers Images");
 
-    public static final String VERSION = "2.0"; //TODO this should be in properties file - https://stackoverflow.com/questions/3697449
-    //TODO add missing minor version (update release script to increment minor version, rather than major)
+    public static final String VERSION = "2.0"; //TODO ugly code: this should be in properties file - https://stackoverflow.com/questions/3697449
+    //TODO ugly code: add missing minor version (update release script to increment minor version, rather than major)
 
     public static void main(String[] args) {
         MAIN_FOLDER.mkdirs();
@@ -36,11 +43,11 @@ public class Main {
         backupMaps();
 
         if (MAPS_IMAGES_FOLDER.mkdirs()) {
-            copyResourcesToFolder("/maps/", MAPS_IMAGES_FOLDER);
+            copyMapsResourcesToFolder();
         }
 
         if (MARKERS_IMAGES_FOLDER.mkdirs()) {
-            copyResourcesToFolder("/icons/", MARKERS_IMAGES_FOLDER);
+            copyIconsResourcesToFolder();
         }
 
         if (!SettingsSerialiser.settingsExist()) { // saves migration from 1.1
@@ -132,10 +139,66 @@ public class Main {
         frame.revalidate();
     }
 
-    private static void copyResourcesToFolder(String srcDir, File destDir) {
+    private static void copyMapsResourcesToFolder() {
+        //TODO ugly code: find a nice solution to iterate over resources inside a jar file
+        List<String> files = Arrays.asList(
+                "caves/Cinder Hills Coal Mine.png",
+                "caves/Cinder Hills Coal Mine (more detailed).jpg",
+                "caves/Cinder Hills Coal Mine (Wintermute).png",
+                "caves/No 3 Coal Mine.png",
+
+                "connectors/Crumbling Highway.png",
+                "connectors/Ravine.png",
+                "connectors/Winding River.png",
+
+                "Bleak Inlet.png",
+                "Broken Railroad.png",
+                "Coastal Highway.png",
+                "Desolation Point.png",
+                "Forlorn Muskeg.png",
+                "Hushed River Valley.png",
+                "Mountain Town.png",
+                "Mystery Lake.jpg",
+                "Pleasant Valley.png",
+                "Timberwolf Mountain.png"
+        );
+        copyResources("/maps/", files, MAPS_IMAGES_FOLDER);
+    }
+
+    private static void copyIconsResourcesToFolder() {
+        List<String> files = Arrays.asList(
+                "Collectibles/Cairn.png",
+
+                "Danger/Bear.png",
+                "Danger/Moose.png",
+                "Danger/Wolf.png",
+
+                "Hunting/Deer.png",
+                "Hunting/Rabbit.png",
+
+                "Resources/Cloth.png",
+                "Resources/Reclaimed wood.png",
+
+                "Base.png",
+                "Cross.png",
+                "Exclamation mark.png",
+                "Medicines.png",
+                "Note.png",
+                "Question mark.png",
+                "Tick.png"
+        );
+        copyResources("/icons/", files, MARKERS_IMAGES_FOLDER);
+    }
+
+    private static void copyResources(String resourceFolder, List<String> files, File destinationFolder) {
         try {
-            FileUtils.copyDirectory(new File(Main.class.getResource(srcDir).toURI()), destDir);
-        } catch (Exception e) {
+            for (String file : files) {
+                InputStream source = Main.class.getResourceAsStream(resourceFolder + file);
+                Path destination = Paths.get(destinationFolder + "/" + file);
+                new File(destination.toUri()).getParentFile().mkdirs();
+                Files.copy(source, destination);
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

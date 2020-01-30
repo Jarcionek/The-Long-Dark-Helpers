@@ -1,3 +1,5 @@
+- redo note popup window
+
 - improve existing icons (resources and animals)
 - add more icons
     - resources: wood, coal, scrap metal, car battery, food/meat?, fish? crates?
