@@ -32,17 +32,8 @@ public class Main {
 
     public static void main(String[] args) {
         MAIN_FOLDER.mkdirs();
-
-        if (!SAVED_MAPS_FOLDER.mkdirs()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
-            LocalDateTime localDateTime = LocalDateTime.now();
-            String dateTime = localDateTime.format(formatter);
-
-            File allBackupsFolder = new File(MAIN_FOLDER, "Maps backups");
-            File backupFolder = new File(allBackupsFolder, dateTime);
-            backupFolder.mkdirs();
-            copyDirectory(SAVED_MAPS_FOLDER, backupFolder);
-        }
+        SAVED_MAPS_FOLDER.mkdirs();
+        backupMaps();
 
         if (MAPS_IMAGES_FOLDER.mkdirs()) {
             copyResourcesToFolder("/maps/", MAPS_IMAGES_FOLDER);
@@ -119,6 +110,17 @@ public class Main {
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    private static void backupMaps() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String dateTime = localDateTime.format(formatter);
+
+        File allBackupsFolder = new File(MAIN_FOLDER, "Maps backups");
+        File backupFolder = new File(allBackupsFolder, dateTime);
+        backupFolder.mkdirs();
+        copyDirectory(SAVED_MAPS_FOLDER, backupFolder);
     }
 
     private static void createMapPanelAndAddToFrame(JFrame frame, Map map) {
