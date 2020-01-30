@@ -29,7 +29,9 @@ public class Main {
 
     public static final int SCROLL_SENSITIVITY = 15;
 
-    public static final File MAIN_FOLDER = new File(System.getProperty("user.dir"), "The Long Dark Helpers");
+    public static final String APPLICATION_NAME = "The Long Dark Helpers";
+
+    public static final File MAIN_FOLDER = new File(System.getProperty("user.dir"), APPLICATION_NAME);
     public static final File SAVED_MAPS_FOLDER = new File(MAIN_FOLDER, "Maps");
     public static final File MAPS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Maps Images");
     public static final File MARKERS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Markers Images");
@@ -63,7 +65,7 @@ public class Main {
             System.out.println("Failed to set look and feel " + e.toString());
         }
 
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame(APPLICATION_NAME + " " + VERSION);
 
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
