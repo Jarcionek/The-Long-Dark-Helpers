@@ -1,8 +1,5 @@
 MARKERS IMPROVEMENTS:
-- merge Marker and Note classes, allow notes on both
-- allow to change the icon of existing marker
 - handle missing image files
-- save migration
 - more icons:
     - resources (wood, coal, cloth, scrap metal, car battery)
     - danger (bear, wolf, moose)
