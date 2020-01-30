@@ -1,32 +1,22 @@
 package uk.co.jpawlak.thelongdark.mapnotes.serializable;
 
+@SuppressWarnings("unused") // used by GSON serialiser to load maps 1.1
 @Deprecated // removed after 1.1
 public class Note {
 
-    private final double x;
-    private final double y;
-
+    private double x;
+    private double y;
     private String text;
 
-    public Note(double x, double y) {
-        this.x = x;
-        this.y = y;
-        this.text = "";
-    }
-
-    public String getText() {
+    String getText() {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public double getX() {
+    double getX() {
         return x;
     }
 
-    public double getY() {
+    double getY() {
         return y;
     }
 

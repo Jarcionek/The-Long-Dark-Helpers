@@ -31,11 +31,6 @@ public class Map {
         return unmodifiableList(markers);
     }
 
-    public List<Note> getNotes() {
-        return unmodifiableList(notes);
-    }
-
-
     public void addMarker(Marker marker) {
         markers.add(marker);
     }
@@ -44,14 +39,6 @@ public class Map {
         markers.remove(marker);
     }
 
-
-    public void addNote(Note note) {
-        notes.add(note);
-    }
-
-    public void removeNote(Note note) {
-        notes.remove(note);
-    }
 
     void migrate() {
         markers.forEach(Marker::migrate);

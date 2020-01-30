@@ -12,24 +12,11 @@ public class Marker {
 
     private String note;
 
-    @Deprecated
-    public Marker(Type type, double x, double y) {
-        this.type = type;
-        this.x = x;
-        this.y = y;
-        migrate();
-    }
-
     public Marker(double x, double y, String imageLocation, String note) {
         this.x = x;
         this.y = y;
         this.imageLocation = imageLocation;
         this.note = note;
-    }
-
-    @Deprecated
-    public Type getType() {
-        return type;
     }
 
     public double getX() {

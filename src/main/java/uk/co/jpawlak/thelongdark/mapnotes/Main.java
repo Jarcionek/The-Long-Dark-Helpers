@@ -38,6 +38,8 @@ public class Main {
             copyDirectory("/icons/", MARKERS_IMAGES_FOLDER);
         }
 
+        //TODO migrate all saves!
+        
         SettingsSerialiser.save(new Settings(VERSION));
 
         try {
