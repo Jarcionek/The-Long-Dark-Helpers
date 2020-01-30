@@ -62,10 +62,10 @@ public class Marker {
 
     private String imageLocationForType() {
         switch (type) {
-            case TICK:    return "/Tick.png"; //TODO slashes at the front are not needed!
-            case WARNING: return "/Exclamation mark.png";
-            case UNKNOWN: return "/Question mark.png";
-            case CROSS:   return "/Cross.png";
+            case TICK:    return "Tick.png";
+            case WARNING: return "Exclamation mark.png";
+            case UNKNOWN: return "Question mark.png";
+            case CROSS:   return "Cross.png";
             default: throw new UnsupportedOperationException("No image defined for type " + type);
         }
     }
