@@ -16,7 +16,9 @@ public class MapSerialiser {
     }
 
     public static Map load(File file) {
-        return Serialiser.load(file, Map.class);
+        Map map = Serialiser.load(file, Map.class);
+        map.getMarkers().forEach(Marker::migrate);
+        return map;
     }
 
 }
