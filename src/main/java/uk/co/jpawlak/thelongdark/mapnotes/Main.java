@@ -30,8 +30,9 @@ public class Main {
     public static void main(String[] args) {
         MAIN_FOLDER.mkdirs();
         SAVED_MAPS_FOLDER.mkdirs();
-        MAPS_IMAGES_FOLDER.mkdirs();
-        //TODO nice to have: if folder was created, copy maps from resource into there
+        if (MAPS_IMAGES_FOLDER.mkdirs()) {
+            copyDirectory("/maps/", MAPS_IMAGES_FOLDER);
+        }
 
         if (MARKERS_IMAGES_FOLDER.mkdirs()) {
             copyDirectory("/icons/", MARKERS_IMAGES_FOLDER);
