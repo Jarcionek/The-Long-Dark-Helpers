@@ -11,7 +11,7 @@ public class FileChooser {
         FileFilter filter = new FileFilter() {
             @Override
             public boolean accept(File file) {
-                return file.isDirectory() || file.getName().matches("(?i).+\\.(jpg|jpeg|png|gif)");
+                return isFolderOrImage(file);
             }
 
             @Override
@@ -38,6 +38,10 @@ public class FileChooser {
 
         return chooseFile(parentComponent, currentDirectoryPath, filter);
 
+    }
+
+    public static boolean isFolderOrImage(File file) {
+        return file.isDirectory() || file.getName().matches("(?i).+\\.(jpg|jpeg|png|gif)");
     }
 
 

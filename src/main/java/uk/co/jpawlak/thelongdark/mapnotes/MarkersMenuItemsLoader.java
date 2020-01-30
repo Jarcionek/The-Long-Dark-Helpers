@@ -22,6 +22,7 @@ public class MarkersMenuItemsLoader {
 
     private static List<JMenuItem> menuItemsFromDirectory(File directory, Consumer<String> clickCallback) {
         return Stream.of(directory.listFiles())
+                .filter(FileChooser::isFolderOrImage)
                 .sorted(comparing(File::getName))
                 .map(file -> file.isDirectory()
                         ? menuFromDirectory(file, clickCallback)
