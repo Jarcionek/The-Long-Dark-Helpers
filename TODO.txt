@@ -1,4 +1,8 @@
-- improve icons and add more resource icons (wood, coal, scrap metal, car battery, food/meat?, fish? crates?)
+- improve existing icons (resources and animals)
+- add more icons
+    - resources: wood, coal, scrap metal, car battery, food/meat?, fish? crates?
+    - doors or open frames (for fishing huts)
+    - erasers (single color, transparent on the sides; in order to paint over map)
 
 - add logging to file
 
