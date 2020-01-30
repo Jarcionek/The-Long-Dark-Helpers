@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class MapPanel extends JLabel {
 
@@ -58,7 +59,7 @@ public class MapPanel extends JLabel {
                 if (event.getButton() == MouseEvent.BUTTON1) {
                     JTextArea textArea = new JTextArea(marker.getNote(), 40, 60); //TODO this should be more flexible
                     JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Note", JOptionPane.PLAIN_MESSAGE); //TODO should be relative to frame
-                    marker.setNote(textArea.getText());
+                    marker.setNote(textArea.getText()); //TODO trim it and if empty, set null instead so that it is not serialised
                     MapSerialiser.save(map);
                 }
                 if (event.getButton() == MouseEvent.BUTTON3) {
@@ -130,42 +131,21 @@ public class MapPanel extends JLabel {
                 return;
             }
 
-            JPopupMenu popup = new JPopupMenu();
-            popup.add(newNoteMenuItem(event.getX(), event.getY()));
-            popup.add(newMarkerMenuItem("Done", Marker.Type.TICK, event.getX(), event.getY()));
-            popup.add(newMarkerMenuItem("Warning", Marker.Type.WARNING, event.getX(), event.getY()));
-            popup.add(newMarkerMenuItem("Unknown", Marker.Type.UNKNOWN, event.getX(), event.getY()));
-            popup.add(newMarkerMenuItem("Cross", Marker.Type.CROSS, event.getX(), event.getY()));
-            popup.show(mapPanel, event.getX(), event.getY());
-        }
-
-        private JMenuItem newNoteMenuItem(int x, int y) {
-            JMenuItem newMarkerItem = new JMenuItem("Note");
-            newMarkerItem.addActionListener(action -> {
-                Note note = new Note(
-                        1.0d * x / mapPanel.getIcon().getIconWidth(),
-                        1.0d * y / mapPanel.getIcon().getIconHeight()
-                );
-                mapPanel.map.addNote(note);
-                MapSerialiser.save(mapPanel.map);
-                mapPanel.createNoteLabel(note);
-            });
-            return newMarkerItem;
-        }
-
-        private JMenuItem newMarkerMenuItem(String name, Marker.Type markerType, int x, int y) {
-            JMenuItem newMarkerItem = new JMenuItem(name);
-            newMarkerItem.addActionListener(action -> {
+            Consumer<String> clickCallback = imageLocation -> {
                 Marker marker = new Marker(
-                        markerType,
-                        1.0d * x / mapPanel.getIcon().getIconWidth(),
-                        1.0d * y / mapPanel.getIcon().getIconHeight()
+                        1.0d * event.getX() / mapPanel.getIcon().getIconWidth(),
+                        1.0d * event.getY() / mapPanel.getIcon().getIconHeight(),
+                        imageLocation,
+                        null
                 );
                 mapPanel.map.addMarker(marker);
                 MapSerialiser.save(mapPanel.map);
                 mapPanel.createMarkerLabel(marker);
-            });
-            return newMarkerItem;
+            };
+
+            JPopupMenu popup = new JPopupMenu();
+            MarkersMenuItemsLoader.createFromFiles(clickCallback).forEach(popup::add);
+            popup.show(mapPanel, event.getX(), event.getY());
         }
 
     }

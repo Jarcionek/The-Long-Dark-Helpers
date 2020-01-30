@@ -12,11 +12,19 @@ public class Marker {
 
     private String note;
 
+    @Deprecated
     public Marker(Type type, double x, double y) {
         this.type = type;
         this.x = x;
         this.y = y;
         migrate();
+    }
+
+    public Marker(double x, double y, String imageLocation, String note) {
+        this.x = x;
+        this.y = y;
+        this.imageLocation = imageLocation;
+        this.note = note;
     }
 
     @Deprecated
@@ -54,7 +62,7 @@ public class Marker {
 
     private String imageLocationForType() {
         switch (type) {
-            case TICK:    return "/Tick.png";
+            case TICK:    return "/Tick.png"; //TODO slashes at the front are not needed!
             case WARNING: return "/Exclamation mark.png";
             case UNKNOWN: return "/Question mark.png";
             case CROSS:   return "/Cross.png";

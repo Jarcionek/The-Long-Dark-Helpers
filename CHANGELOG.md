@@ -1,8 +1,9 @@
 ##### 2.0 (not yet released)
 
 * an error message is now shown when attempting to create a new map with the same name as already existing one
-* added maps images of all regions and some caves/connectors so that the user doesn't have to download them manually
+* added maps images of all regions and some caves/connectors so that you don't have to download them manually
     * these will be only copied if "The Long Dark Helpers/Maps Images" folder doesn't exist yet
+* markers images are now loaded from "The Long Dark Helpers/Markers Images" folder. You can add your own!
 
 ##### 1.1 (26/01/2020)
 

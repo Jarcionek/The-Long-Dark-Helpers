@@ -21,6 +21,7 @@ public class MarkerLabel extends JLabel {
             return new ImageIcon(new File(Main.MARKERS_IMAGES_FOLDER, imageLocation).toURI().toURL());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
+            //TODO display something in case of missing file instead!
         }
     }
 
