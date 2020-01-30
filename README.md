@@ -25,4 +25,4 @@ See all the updates in the [changelog](CHANGELOG.md).
 
 ## Build the source code yourself
 
-Build jar file by running `clean compile assembly:single`.
+Build jar file by running `mvn clean compile assembly:single`.
