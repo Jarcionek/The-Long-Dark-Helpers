@@ -10,6 +10,8 @@ public class Marker {
 
     private String imageLocation;
 
+    private String note;
+
     public Marker(Type type, double x, double y) {
         this.type = type;
         this.x = x;
@@ -32,6 +34,14 @@ public class Marker {
 
     public String getImageLocation() {
         return imageLocation;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     void migrate() {

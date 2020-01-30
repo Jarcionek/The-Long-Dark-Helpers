@@ -55,21 +55,25 @@ public class MapPanel extends JLabel {
         markerLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent event) {
-                if (event.getButton() != MouseEvent.BUTTON3) {
-                    return;
-                }
-
-                JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");
-                deleteMarkerMenuItem.addActionListener(action -> {
-                    MapPanel.this.remove(markerLabel);
-                    map.removeMarker(marker);
-                    repaint();
+                if (event.getButton() == MouseEvent.BUTTON1) {
+                    JTextArea textArea = new JTextArea(marker.getNote(), 40, 60); //TODO this should be more flexible
+                    JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Note", JOptionPane.PLAIN_MESSAGE); //TODO should be relative to frame
+                    marker.setNote(textArea.getText());
                     MapSerialiser.save(map);
-                });
+                }
+                if (event.getButton() == MouseEvent.BUTTON3) {
+                    JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");
+                    deleteMarkerMenuItem.addActionListener(action -> {
+                        MapPanel.this.remove(markerLabel);
+                        map.removeMarker(marker);
+                        repaint();
+                        MapSerialiser.save(map);
+                    });
 
-                JPopupMenu popup = new JPopupMenu();
-                popup.add(deleteMarkerMenuItem);
-                popup.show(markerLabel, event.getX(), event.getY());
+                    JPopupMenu popup = new JPopupMenu();
+                    popup.add(deleteMarkerMenuItem);
+                    popup.show(markerLabel, event.getX(), event.getY());
+                }
             }
         });
 
