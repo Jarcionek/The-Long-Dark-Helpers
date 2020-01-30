@@ -1,5 +1,4 @@
 MARKERS IMPROVEMENTS:
-- handle missing image files
 - more icons:
     - resources (wood, coal, cloth, scrap metal, car battery)
     - danger (bear, wolf, moose)
