@@ -23,6 +23,7 @@ public class Main {
     public static final File MAPS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Maps Images");
 
     public static final String VERSION = "2.0"; //TODO this should be in properties file - https://stackoverflow.com/questions/3697449
+    //TODO add missing minor version (update release script to increment minor version, rather than major)
 
     public static void main(String[] args) {
         MAIN_FOLDER.mkdirs();
