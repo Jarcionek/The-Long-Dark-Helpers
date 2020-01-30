@@ -3,6 +3,7 @@
 * saved map format has been changed, all the maps will be migrated to new format on application startup
 * your maps are now backed up on every application startup (before migration)
 * it is now possible to add notes to all markers
+* image of the marker is now shown in the popup menu while placing it
 * an error message is now shown when attempting to create a new map with the same name as already existing one
 * added maps images of all regions and some caves/connectors so that you don't have to download them manually
     * these will be only copied if "The Long Dark Helpers/Maps Images" folder doesn't exist yet
