@@ -1,5 +1,6 @@
 package uk.co.jpawlak.thelongdark.mapnotes.serializable;
 
+@Deprecated // removed after 1.1
 public class Note {
 
     private final double x;

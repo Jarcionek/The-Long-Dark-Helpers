@@ -10,7 +10,9 @@ public class Map {
     private final String name;
     private final String imageLocation;
     private final List<Marker> markers = new ArrayList<>();
-    private final List<Note> notes = new ArrayList<>();
+
+    @Deprecated // removed after 1.1
+    private List<Note> notes = new ArrayList<>();
 
     public Map(String name, String imageLocation) {
         this.name = name;
@@ -49,6 +51,14 @@ public class Map {
 
     public void removeNote(Note note) {
         notes.remove(note);
+    }
+
+    void migrate() {
+        markers.forEach(Marker::migrate);
+        notes.stream()
+                .map(note -> new Marker(note.getX(), note.getY(), "Note.png", note.getText()))
+                .forEach(markers::add);
+        notes = null;
     }
 
 }
