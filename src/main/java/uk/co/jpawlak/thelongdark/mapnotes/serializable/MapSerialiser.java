@@ -1,7 +1,8 @@
-package uk.co.jpawlak.thelongdark.mapnotes;
+package uk.co.jpawlak.thelongdark.mapnotes.serializable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import uk.co.jpawlak.thelongdark.mapnotes.Main;
 
 import java.io.File;
 import java.io.FileNotFoundException;

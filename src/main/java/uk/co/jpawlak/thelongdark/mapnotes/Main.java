@@ -1,5 +1,8 @@
 package uk.co.jpawlak.thelongdark.mapnotes;
 
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.Map;
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.MapSerialiser;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;

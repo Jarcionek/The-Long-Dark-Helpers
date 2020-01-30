@@ -1,5 +1,7 @@
 package uk.co.jpawlak.thelongdark.mapnotes;
 
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.Note;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.net.MalformedURLException;

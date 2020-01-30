@@ -1,4 +1,4 @@
-package uk.co.jpawlak.thelongdark.mapnotes;
+package uk.co.jpawlak.thelongdark.mapnotes.serializable;
 
 import java.util.ArrayList;
 import java.util.List;

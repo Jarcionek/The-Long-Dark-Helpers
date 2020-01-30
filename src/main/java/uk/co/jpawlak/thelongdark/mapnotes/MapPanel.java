@@ -1,5 +1,10 @@
 package uk.co.jpawlak.thelongdark.mapnotes;
 
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.Map;
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.MapSerialiser;
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.Marker;
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.Note;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
