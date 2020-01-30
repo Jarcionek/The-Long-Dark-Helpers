@@ -1,9 +1,4 @@
-MARKERS IMPROVEMENTS:
-- more icons:
-    - resources (wood, coal, cloth, scrap metal, car battery)
-    - danger (bear, wolf, moose)
-    - hunting ground (rabbit, deer)
-    - collectibles (cairn)
+- improve icons and add more resource icons (wood, coal, scrap metal, car battery, food/meat?, fish? crates?)
 
 - add logging to file
 
