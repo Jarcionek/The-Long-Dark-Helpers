@@ -10,7 +10,8 @@ read version
 # UPDATE VERSIONS
 sed -i "s|^    <version>.*</version>|    <version>${version}</version>|" pom.xml
 sed -i "1s|^.*$|##### ${version} (`date +%d/%m/%Y`)|" CHANGELOG.md
-git add pom.xml CHANGELOG.md
+sed -i "s|^    public static final String VERSION = ".*";|    public static final String VERSION = \"${version}\";|" src/main/java/uk/co/jpawlak/thelongdark/mapnotes/Main.java
+git add pom.xml CHANGELOG.md src/main/java/uk/co/jpawlak/thelongdark/mapnotes/Main.java
 git commit -m "prepare release ${version}"
 git tag "${version}"
 
@@ -23,7 +24,8 @@ mv "target/TheLongDarkHelpers-${version}-jar-with-dependencies.jar" "target/TheL
 nextVersion=$((${version%%.*} + 1)).0
 sed -i "s|^    <version>.*</version>|    <version>${nextVersion}-SNAPSHOT</version>|" pom.xml
 sed -i "1s|^|##### ${nextVersion} (not yet released)\n\n|" CHANGELOG.md
-git add pom.xml CHANGELOG.md
+sed -i "s|^    public static final String VERSION = ".*";|    public static final String VERSION = \"${nextVersion}\";|" src/main/java/uk/co/jpawlak/thelongdark/mapnotes/Main.java
+git add pom.xml CHANGELOG.md src/main/java/uk/co/jpawlak/thelongdark/mapnotes/Main.java
 git commit -m "prepare for next development iteration"
 
 # GIT PUSH

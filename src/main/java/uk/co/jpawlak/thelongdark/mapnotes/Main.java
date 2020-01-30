@@ -2,6 +2,8 @@ package uk.co.jpawlak.thelongdark.mapnotes;
 
 import uk.co.jpawlak.thelongdark.mapnotes.serializable.Map;
 import uk.co.jpawlak.thelongdark.mapnotes.serializable.MapSerialiser;
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.Settings;
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.SettingsSerialiser;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -20,11 +22,15 @@ public class Main {
     public static final File SAVED_MAPS_FOLDER = new File(MAIN_FOLDER, "Maps");
     public static final File MAPS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Maps Images");
 
+    public static final String VERSION = "2.0"; //TODO this should be in properties file - https://stackoverflow.com/questions/3697449
+
     public static void main(String[] args) {
         MAIN_FOLDER.mkdirs();
         SAVED_MAPS_FOLDER.mkdirs();
         MAPS_IMAGES_FOLDER.mkdirs();
         //TODO nice to have: if folder was created, copy maps from resource into there
+
+        SettingsSerialiser.save(new Settings(VERSION));
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
