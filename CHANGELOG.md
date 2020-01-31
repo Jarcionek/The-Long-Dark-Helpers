@@ -1,5 +1,6 @@
 ##### 2.0 (not yet released)
 
+* application window now has a title with version
 * updated some of the maps - they will be only copied to "The Long Dark Helpers/Maps Images" folder if it doesn't exist yet
     * Bleak Inlet
     * Ravine
