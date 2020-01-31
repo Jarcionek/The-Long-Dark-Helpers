@@ -1,10 +1,19 @@
 - redo note popup window
+    - extra window
+    - always on top option
+    - change indicator
+    - save on focus loss
+
+- add names to markers
+
+- add search functionality
 
 - improve existing icons (resources and animals)
 - add more icons
     - resources: wood, coal, scrap metal, car battery, food/meat?, fish? crates?
     - doors or open frames (for fishing huts)
     - erasers (single color, transparent on the sides; in order to paint over map)
+    - snares
 
 - add logging to file
 
