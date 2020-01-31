@@ -1,7 +1,8 @@
 ##### 2.0 (not yet released)
 
-* updated Bleak Inlet map
-    * it will be only copied if "The Long Dark Helpers/Maps Images" folder doesn't exist yet
+* updated some of the maps - they will be only copied to "The Long Dark Helpers/Maps Images" folder if it doesn't exist yet
+    * Bleak Inlet
+    * Ravine
 
 ##### 1.2 (30/01/2020)
 
