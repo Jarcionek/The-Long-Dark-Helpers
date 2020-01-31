@@ -1,9 +1,11 @@
 ##### 2.0 (not yet released)
 
 * application window now has a title with version
-* updated some of the maps - they will be only copied to "The Long Dark Helpers/Maps Images" folder if it doesn't exist yet
-    * Bleak Inlet
-    * Ravine
+* changes to maps - they will be only copied to "The Long Dark Helpers/Maps Images" folder if it doesn't exist yet
+    * updated Bleak Inlet
+    * updated Ravine
+* changes to icons - they will be only copied to "The Long Dark Helpers/Markers Images" folder if it doesn't exist yet
+    * changed the exclamation mark as it was not visible over red/brown buildings
 
 ##### 1.2 (30/01/2020)
 

@@ -45,8 +45,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.98097"
-     inkscape:cx="2.3172928"
-     inkscape:cy="20.302162"
+     inkscape:cx="20.016227"
+     inkscape:cy="13.778723"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -70,7 +70,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -79,9 +79,16 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-288.53332)">
+    <ellipse
+       id="path3731"
+       style="opacity:1;fill:#e1ff3f;fill-opacity:0.49803922;stroke:#df690f;stroke-width:0.52916667;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       cx="4.2333331"
+       cy="292.76666"
+       rx="3.9687195"
+       ry="3.9687197" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:Gulim;-inkscape-font-specification:'Gulim, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#df690f;fill-opacity:1;stroke:#df690f;stroke-width:0.3175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:Gulim;-inkscape-font-specification:'Gulim, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#df690f;fill-opacity:1;stroke:#00000c;stroke-width:0.3175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers;"
        x="3.094738"
        y="295.30997"
        id="text827"><tspan
@@ -89,13 +96,6 @@
          id="tspan825"
          x="3.094738"
          y="295.30997"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:8.81944466px;font-family:Gulim;-inkscape-font-specification:'Gulim, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#df690f;fill-opacity:1;stroke:#df690f;stroke-width:0.3175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers">!</tspan></text>
-    <ellipse
-       id="path3731"
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#df690f;stroke-width:0.52916667;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       cx="4.2333331"
-       cy="292.76666"
-       rx="3.9687195"
-       ry="3.9687197" />
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:8.81944466px;font-family:Gulim;-inkscape-font-specification:'Gulim, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#df690f;fill-opacity:1;stroke:#00000c;stroke-width:0.3175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers;">!</tspan></text>
   </g>
 </svg>
