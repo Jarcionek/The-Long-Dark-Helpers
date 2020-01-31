@@ -3,6 +3,7 @@
 * application window now has a title with version
 * changes to maps - they will be only copied to "The Long Dark Helpers/Maps Images" folder if it doesn't exist yet
     * updated Bleak Inlet
+    * updated Pleasant Valley
     * updated Ravine
 * changes to icons - they will be only copied to "The Long Dark Helpers/Markers Images" folder if it doesn't exist yet
     * changed the exclamation mark as it was not visible over red/brown buildings
