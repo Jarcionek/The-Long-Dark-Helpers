@@ -26,8 +26,11 @@ public class MapPanel extends JLabel {
 
     private final Map map;
 
-    public MapPanel(Map map) {
+    private final MapSerialiser mapSerialiser;
+
+    public MapPanel(Map map, MapSerialiser mapSerialiser) {
         this.map = map;
+        this.mapSerialiser = mapSerialiser;
 
         BufferedImage image = loadImage(map.getImageLocation());
         ImageIcon imageIcon = new ImageIcon(image);
@@ -54,7 +57,7 @@ public class MapPanel extends JLabel {
                     JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Note", JOptionPane.PLAIN_MESSAGE); //TODO should be relative to frame
                     String newText = textArea.getText();
                     marker.setNote(newText.trim().isEmpty() ? null : newText);
-                    MapSerialiser.save(map);
+                    mapSerialiser.save(map);
                 }
                 if (event.getButton() == MouseEvent.BUTTON3) {
                     JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");
@@ -63,7 +66,7 @@ public class MapPanel extends JLabel {
                         MapPanel.this.remove(markerLabel);
                         map.removeMarker(marker);
                         repaint();
-                        MapSerialiser.save(map);
+                        mapSerialiser.save(map);
                     });
 
                     JMenu changeIconMenu = new JMenu("Change icon");
@@ -71,7 +74,7 @@ public class MapPanel extends JLabel {
                         marker.setImageLocation(imageLocation);
                         markerLabel.setMarkerIcon(marker);
                         markerLabel.setLocation(calculatedLocationFor(marker, markerLabel));
-                        MapSerialiser.save(map);
+                        mapSerialiser.save(map);
                     };
                     MarkersMenuItemsLoader.createFromFiles(clickCallback).forEach(changeIconMenu::add);
 
@@ -94,7 +97,7 @@ public class MapPanel extends JLabel {
         );
     }
 
-    private static class MapMouseListener extends MouseAdapter {
+    private class MapMouseListener extends MouseAdapter {
 
         private MapPanel mapPanel;
 
@@ -116,7 +119,7 @@ public class MapPanel extends JLabel {
                         null
                 );
                 mapPanel.map.addMarker(marker);
-                MapSerialiser.save(mapPanel.map);
+                mapSerialiser.save(mapPanel.map);
                 mapPanel.createMarkerLabel(marker);
             };
 

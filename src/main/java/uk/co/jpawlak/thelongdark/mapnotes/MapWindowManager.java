@@ -15,6 +15,14 @@ public class MapWindowManager {
 
     private static final int SCROLL_SENSITIVITY = 15;
 
+    private final FileChooser fileChooser;
+    private final MapSerialiser mapSerialiser;
+
+    public MapWindowManager(FileChooser fileChooser, MapSerialiser mapSerialiser) {
+        this.fileChooser = fileChooser;
+        this.mapSerialiser = mapSerialiser;
+    }
+
     public void create() {
         JFrame frame = new JFrame(Main.APPLICATION_NAME + " " + Main.VERSION);
 
@@ -27,7 +35,7 @@ public class MapWindowManager {
         JMenuItem newMapMenuItem = new JMenuItem("New");
         mapMenu.add(newMapMenuItem);
         newMapMenuItem.addActionListener(action -> {
-            File selectedFile = FileChooser.chooseImage(frame, Main.MAPS_IMAGES_FOLDER);
+            File selectedFile = fileChooser.chooseImage(frame, Main.MAPS_IMAGES_FOLDER);
             if (selectedFile == null) {
                 return;
             }
@@ -44,25 +52,25 @@ public class MapWindowManager {
                     selectedFile.getName().replaceFirst("\\..*", "")
             );
 
-            if (MapSerialiser.exists(name)) {
+            if (mapSerialiser.exists(name)) {
                 JOptionPane.showMessageDialog(frame, "Name already exists!", "New map", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             Map map = new Map(name, selectedFile.getPath()); //TODO nice to have: path relative to Maps Images folder
-            MapSerialiser.save(map);
+            mapSerialiser.save(map);
             createMapPanelAndAddToFrame(frame, map);
         });
 
         JMenuItem loadMapMenuItem = new JMenuItem("Load");
         mapMenu.add(loadMapMenuItem);
         loadMapMenuItem.addActionListener(action -> {
-            File selectedFile = FileChooser.chooseJson(frame, Main.SAVED_MAPS_FOLDER);
+            File selectedFile = fileChooser.chooseJson(frame, Main.SAVED_MAPS_FOLDER);
             if (selectedFile == null) {
                 return;
             }
 
-            Map map = MapSerialiser.load(selectedFile);
+            Map map = mapSerialiser.load(selectedFile);
             createMapPanelAndAddToFrame(frame, map);
         });
 
@@ -72,8 +80,8 @@ public class MapWindowManager {
         frame.setVisible(true);
     }
 
-    private static void createMapPanelAndAddToFrame(JFrame frame, Map map) {
-        MapPanel mapPanel = new MapPanel(map);
+    private void createMapPanelAndAddToFrame(JFrame frame, Map map) {
+        MapPanel mapPanel = new MapPanel(map, mapSerialiser);
         JScrollPane scrollPane = new JScrollPane(mapPanel);
         scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_SENSITIVITY);
         scrollPane.getHorizontalScrollBar().setUnitIncrement(SCROLL_SENSITIVITY);

@@ -6,22 +6,21 @@ import java.io.File;
 
 public class MapSerialiser {
 
-    public static boolean exists(String name) {
+    public boolean exists(String name) {
         return new File(Main.SAVED_MAPS_FOLDER, name + ".json").exists();
     }
 
-    public static void save(Map map) {
+    public void save(Map map) {
         Serialiser.save(map, Main.SAVED_MAPS_FOLDER, map.getName());
-
     }
 
-    public static Map loadAndMigrate(File file) {
+    public Map loadAndMigrate(File file) {
         Map map = load(file);
         map.migrate();
         return map;
     }
 
-    public static Map load(File file) {
+    public Map load(File file) {
         return Serialiser.load(file, Map.class);
     }
 

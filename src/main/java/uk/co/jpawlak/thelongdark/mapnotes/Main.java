@@ -43,20 +43,26 @@ public class Main {
             copyIconsResourcesToFolder();
         }
 
-        if (!SettingsSerialiser.settingsExist()) { // saves migration from 1.1
+        SettingsSerialiser settingsSerialiser = new SettingsSerialiser();
+        MapSerialiser mapSerialiser = new MapSerialiser();
+
+        if (!settingsSerialiser.settingsExist()) { // saves migration from 1.1
             Stream.of(SAVED_MAPS_FOLDER.listFiles())
-                    .map(MapSerialiser::loadAndMigrate)
-                    .forEach(MapSerialiser::save);
-            SettingsSerialiser.save(new Settings(VERSION));
+                    .map(mapSerialiser::loadAndMigrate)
+                    .forEach(mapSerialiser::save);
+            settingsSerialiser.save(new Settings(VERSION));
         }
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            System.out.println("Failed to set look and feel " + e.toString());
+            System.out.println("Failed to set look and feel " + e.toString()); //TODO ugly code: logger!
         }
 
-        new MapWindowManager().create();
+        FileChooser fileChooser = new FileChooser();
+        MapWindowManager mapWindowManager = new MapWindowManager(fileChooser, mapSerialiser);
+
+        mapWindowManager.create();
     }
 
     private static void backupMaps() {

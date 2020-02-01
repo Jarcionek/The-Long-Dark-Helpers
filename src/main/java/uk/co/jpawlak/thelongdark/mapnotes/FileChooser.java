@@ -7,7 +7,7 @@ import java.io.File;
 
 public class FileChooser {
 
-    public static File chooseImage(Component parentComponent, File currentDirectoryPath) {
+    public File chooseImage(Component parentComponent, File currentDirectoryPath) {
         FileFilter filter = new FileFilter() {
             @Override
             public boolean accept(File file) {
@@ -23,7 +23,7 @@ public class FileChooser {
         return chooseFile(parentComponent, currentDirectoryPath, filter);
     }
 
-    public static File chooseJson(Component parentComponent, File currentDirectoryPath) {
+    public File chooseJson(Component parentComponent, File currentDirectoryPath) {
         FileFilter filter = new FileFilter() {
             @Override
             public boolean accept(File file) {

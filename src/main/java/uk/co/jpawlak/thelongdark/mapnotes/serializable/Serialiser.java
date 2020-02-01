@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 
-public class Serialiser {
+class Serialiser {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
