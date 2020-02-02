@@ -125,6 +125,7 @@ public class Main {
                 "Resources/Reclaimed wood.png",
 
                 "Base.png",
+                "Blue tick.png",
                 "Cross.png",
                 "Exclamation mark.png",
                 "Medicines.png",
