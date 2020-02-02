@@ -28,12 +28,14 @@ public class Main {
     public static final File MARKERS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Markers Images");
 
     public static final String VERSION = "2.0-SNAPSHOT"; //TODO ugly code: this should be in properties file - https://stackoverflow.com/questions/3697449
-    //TODO ugly code: add missing minor version (update release script to increment minor version, rather than major)
+    //TODO ugly code: add missing fix version (update release script to increment minor version, rather than major)
 
     public static void main(String[] args) {
-        MAIN_FOLDER.mkdirs();
-        SAVED_MAPS_FOLDER.mkdirs();
-        backupMaps();
+        boolean isFreshInstallation = MAIN_FOLDER.mkdirs();
+
+        if (!SAVED_MAPS_FOLDER.mkdirs()) {
+            backupMaps();
+        }
 
         if (MAPS_IMAGES_FOLDER.mkdirs()) {
             copyMapsResourcesToFolder();
@@ -46,11 +48,8 @@ public class Main {
         SettingsSerialiser settingsSerialiser = new SettingsSerialiser();
         MapSerialiser mapSerialiser = new MapSerialiser();
 
-        if (!settingsSerialiser.settingsExist()) { // saves migration from 1.1
-            Stream.of(SAVED_MAPS_FOLDER.listFiles())
-                    .map(mapSerialiser::loadAndMigrate)
-                    .forEach(mapSerialiser::save);
-            settingsSerialiser.save(new Settings(VERSION));
+        if (!isFreshInstallation) {
+            migrateSavedMaps(settingsSerialiser, mapSerialiser);
         }
 
         try {
@@ -63,6 +62,15 @@ public class Main {
         MapWindowManager mapWindowManager = new MapWindowManager(fileChooser, mapSerialiser);
 
         mapWindowManager.create();
+    }
+
+    private static void migrateSavedMaps(SettingsSerialiser settingsSerialiser, MapSerialiser mapSerialiser) {
+        if (!settingsSerialiser.settingsExist()) { // saves migration from 1.1
+            Stream.of(SAVED_MAPS_FOLDER.listFiles())
+                    .map(mapSerialiser::loadAndMigrate)
+                    .forEach(mapSerialiser::save);
+            settingsSerialiser.save(new Settings(VERSION));
+        }
     }
 
     private static void backupMaps() {
