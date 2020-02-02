@@ -8,6 +8,7 @@
 * changes to icons - they will be only copied to "The Long Dark Helpers/Markers Images" folder if it doesn't exist yet
     * changed the exclamation mark as it was not visible over red/brown buildings
     * added blue tick
+    * added information (blue 'i')
 
 ##### 1.2 (30/01/2020)
 
