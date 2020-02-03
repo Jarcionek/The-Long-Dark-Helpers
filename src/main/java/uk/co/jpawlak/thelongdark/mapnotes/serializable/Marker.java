@@ -35,6 +35,10 @@ public class Marker {
         this.imageLocation = imageLocation;
     }
 
+    public boolean hasNote() {
+        return note != null && !note.trim().isEmpty();
+    }
+
     public String getNote() {
         return note;
     }

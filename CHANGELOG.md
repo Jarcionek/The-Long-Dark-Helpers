@@ -1,6 +1,7 @@
 ##### 2.0 (not yet released)
 
 * application window now has a title with version
+* added confirmation popup when deleting a marker with a note
 * changes to maps - they will be only copied to "The Long Dark Helpers/Maps Images" folder if it doesn't exist yet
     * updated Bleak Inlet
     * updated Pleasant Valley

@@ -62,7 +62,18 @@ public class MapPanel extends JLabel {
                 if (event.getButton() == MouseEvent.BUTTON3) {
                     JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");
                     deleteMarkerMenuItem.addActionListener(action -> {
-                        //TODO to consider: confirmation popup if there is a note?
+                        if (marker.hasNote()) {
+                            int choice = JOptionPane.showConfirmDialog(
+                                    null, //TODO should be relative to frame
+                                    "This marker contains a note, are you sure you want to delete it?",
+                                    "Confirmation",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.WARNING_MESSAGE
+                            );
+                            if (choice != JOptionPane.YES_OPTION) {
+                                return;
+                            }
+                        }
                         MapPanel.this.remove(markerLabel);
                         map.removeMarker(marker);
                         repaint();
