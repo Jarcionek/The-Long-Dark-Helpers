@@ -7,7 +7,7 @@ import static java.util.Collections.unmodifiableList;
 
 public class Map {
 
-    private final String name;
+    private final String name; //TODO ugly code: shouldn't this be non serializable and populate with a filename after loading?
     private final String imageLocation;
     private final List<Marker> markers = new ArrayList<>();
 
