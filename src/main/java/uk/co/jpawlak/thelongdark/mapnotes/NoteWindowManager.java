@@ -77,6 +77,7 @@ public class NoteWindowManager {
 
             @Override
             public void keyTyped(KeyEvent e) {
+                //TODO bug: current textArea text is before this event is actually applied
                 if (!textArea.getText().equals(marker.getNote())) {
                     setTitleAsteriskVisible(frame, true);
                 }
