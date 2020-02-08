@@ -23,52 +23,35 @@ public class NoteWindowManager {
     private final MapSerialiser mapSerialiser;
 
     private JFrame frame;
-    private JTextArea textArea;
-    private JScrollPane textAreaScrollPane;
-    private Marker marker;
-    private Map map;
 
     public NoteWindowManager(SettingsSerialiser settingsSerialiser, MapSerialiser mapSerialiser) {
         this.settingsSerialiser = settingsSerialiser;
         this.mapSerialiser = mapSerialiser;
     }
 
-    //TODO ensure singleton
-    public void openNote(Marker marker, Map map) {
-        this.marker = marker;
-        this.map = map;
-        if (frame == null) {
-            frame = createFrame();
+    public synchronized void openNote(Marker marker, Map map) {
+        if (frame != null) {
+            frame.dispose();
         }
+        frame = createFrame(marker, map);
+    }
+
+    private JFrame createFrame(Marker marker, Map map) {
+        JFrame frame = new JFrame(Main.APPLICATION_NAME + " - Note");
+
+        JTextArea textArea = new JTextArea();
         textArea.setText(marker.getNote());
-        frame.setVisible(true);
-        //TODO ugly code: cannot execute it here normally..
+        textArea.setTabSize(4);
+
+        JScrollPane textAreaScrollPane = new JScrollPane(textArea);
         SwingUtilities.invokeLater(() -> {
             textAreaScrollPane.getHorizontalScrollBar().setValue(0);
             textAreaScrollPane.getVerticalScrollBar().setValue(0);
         });
-    }
-
-    private JFrame createFrame() {
-        JFrame frame = new JFrame(Main.APPLICATION_NAME + " - Note");
-
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-                System.out.println("window deactivated");
-                save();
-            }
-        });
-
-        textArea = new JTextArea();
-        textArea.setTabSize(4);
-
-        textAreaScrollPane = new JScrollPane(textArea);
 
         JButton closeButton = new JButton("Close");
         closeButton.addActionListener(action -> {
-            System.out.println("close button pressed");
-            frame.setVisible(false);
+            frame.dispose();
         });
 
         JPanel buttonsPanel = new JPanel(new FlowLayout());
@@ -79,18 +62,27 @@ public class NoteWindowManager {
         contentPane.add(buttonsPanel, BorderLayout.SOUTH);
         frame.setContentPane(contentPane);
 
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+                save(textArea, marker, map);
+            }
+        });
+
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setMinimumSize(new Dimension(400, 300));
         frame.setSize(400, 300);
+        frame.setAlwaysOnTop(true);
 
         //TODO open at last position
         frame.setLocationRelativeTo(null);
 
+        frame.setVisible(true);
+
         return frame;
     }
 
-    private void save() {
-        System.out.println("saving");
+    private void save(JTextArea textArea, Marker marker, Map map) {
         String newText = textArea.getText();
         marker.setNote(newText.trim().isEmpty() ? null : newText);
         mapSerialiser.save(map);
