@@ -19,6 +19,9 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -44,12 +47,32 @@ public class NoteWindowManager {
         frame = createFrame(marker, map);
     }
 
+    //TODO nice to have: help in frame menu bar informing about CTRL+S and ESC?
     private JFrame createFrame(Marker marker, Map map) {
         JFrame frame = new JFrame(Main.APPLICATION_NAME + " - Note");
 
         JTextArea textArea = new JTextArea();
         textArea.setText(marker.getNote());
         textArea.setTabSize(4);
+
+        textArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    frame.dispose();
+                }
+                if (e.getModifiers() == InputEvent.CTRL_MASK && e.getKeyCode() == KeyEvent.VK_S) {
+                    saveMap(frame, textArea, marker, map);
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (!textArea.getText().equals(marker.getNote())) {
+                    setTitleAsteriskVisible(frame, true);
+                }
+            }
+        });
 
         JScrollPane textAreaScrollPane = new JScrollPane(textArea);
         SwingUtilities.invokeLater(() -> {
@@ -73,7 +96,7 @@ public class NoteWindowManager {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowDeactivated(WindowEvent e) {
-                saveMap(textArea, marker, map);
+                saveMap(frame, textArea, marker, map);
             }
         });
         frame.addComponentListener(new ComponentAdapter() {
@@ -105,10 +128,12 @@ public class NoteWindowManager {
 
         return frame;
     }
-    private void saveMap(JTextArea textArea, Marker marker, Map map) {
+
+    private void saveMap(JFrame frame, JTextArea textArea, Marker marker, Map map) {
         String newText = textArea.getText();
         marker.setNote(newText.trim().isEmpty() ? null : newText);
         mapSerialiser.save(map);
+        setTitleAsteriskVisible(frame, false);
     }
 
     private void saveNoteWindowSettings(Point location, Dimension size) {
@@ -117,7 +142,10 @@ public class NoteWindowManager {
         settingsSerialiser.save(settings);
     }
 
-    //TODO nice to have: save note on ctrl+S and periodically? (every 5s? or 3s after stopped typing?)
-    //TODO nice to have: file modified indicator (check whether pasting needs special handling)
+    private static void setTitleAsteriskVisible(JFrame frame, boolean showAsterisk) {
+        String titleWithoutAsterisk = frame.getTitle().startsWith("*") ? frame.getTitle().substring(1) : frame.getTitle();
+        String newTitle = showAsterisk ? "*" + titleWithoutAsterisk : titleWithoutAsterisk;
+        frame.setTitle(newTitle);
+    }
 
 }
