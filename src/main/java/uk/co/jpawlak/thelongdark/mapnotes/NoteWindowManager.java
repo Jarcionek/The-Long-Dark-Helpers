@@ -113,7 +113,7 @@ public class NoteWindowManager {
 
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setMinimumSize(DEFAULT_SIZE);
-        frame.setAlwaysOnTop(true);
+        frame.setAlwaysOnTop(true); //TODO to consider: setting?
 
         WindowSettings noteWindowSettings = settingsSerialiser.load().getNoteWindowSettings();
         if (noteWindowSettings == null) {

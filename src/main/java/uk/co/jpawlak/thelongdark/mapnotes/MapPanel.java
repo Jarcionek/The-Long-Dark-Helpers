@@ -55,6 +55,7 @@ public class MapPanel extends JLabel {
                     noteWindowManager.openNote(marker, map);
                 }
                 if (event.getButton() == MouseEvent.BUTTON3) {
+                    //TODO check if this note is open and if it is, close it
                     JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");
                     deleteMarkerMenuItem.addActionListener(action -> {
                         if (marker.hasNote()) {

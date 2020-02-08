@@ -2,12 +2,6 @@
     - new screenshot
     - information about changing/adding new icons
 
-- redo note popup window
-    - extra window
-    - always on top option
-    - change indicator
-    - save on focus loss
-
 - add names to markers
 
 - add search functionality

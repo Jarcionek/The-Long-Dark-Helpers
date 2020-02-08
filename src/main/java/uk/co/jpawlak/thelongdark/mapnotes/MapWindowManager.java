@@ -74,8 +74,14 @@ public class MapWindowManager {
         });
 
         JMenuItem loadMapMenuItem = new JMenuItem("Load");
+        //TODO persist the map and reopen it on startup
         mapMenu.add(loadMapMenuItem);
         loadMapMenuItem.addActionListener(action -> {
+            /* //TODO ugly code: inconsistency when loading/saving map
+             * this allows to select a file in any folder when loading, but saving won't respect the location,
+             * it will use the name saved in the file and save it to SAVED_MAPS_FOLDER, possibly overriding existing map
+             * should it use a dropdown instead of file chooser?
+             */
             File selectedFile = fileChooser.chooseJson(frame, Main.SAVED_MAPS_FOLDER);
             if (selectedFile == null) {
                 return;

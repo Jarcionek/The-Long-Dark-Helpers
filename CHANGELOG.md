@@ -2,6 +2,12 @@
 
 * application window now has a title with version
 * added confirmation popup when deleting a marker with a note
+* improved the note popup
+    * its size and position are now persisted
+    * added 'modified' indicator
+    * can now be saved with CTRL+S
+* improved map window
+    * its size and position are now persisted
 * changes to maps - they will be only copied to "The Long Dark Helpers/Maps Images" folder if it doesn't exist yet
     * updated Bleak Inlet
     * updated Pleasant Valley
