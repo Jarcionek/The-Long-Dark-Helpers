@@ -1,6 +1,8 @@
 # The-Long-Dark-Helpers
 Helper programs for playing The Long Dark
 
+
+
 # Map Helper
 
 ## How does it work?
@@ -26,3 +28,11 @@ See all the updates in the [changelog](CHANGELOG.md).
 ## Build the source code yourself
 
 Build jar file by running `mvn clean compile assembly:single`.
+
+
+
+# Feats Backup
+
+Have you ever lost your feats progression and sandbox stats due to faulty Steam sync or any other reason?
+
+[This script](featsBackup.bat) makes a backup copy of user001* files where these information are stored.
