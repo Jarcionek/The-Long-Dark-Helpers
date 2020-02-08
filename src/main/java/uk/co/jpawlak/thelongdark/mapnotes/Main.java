@@ -27,7 +27,7 @@ public class Main {
     public static final File MAPS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Maps Images");
     public static final File MARKERS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Markers Images");
 
-    public static final String VERSION = "1.3"; //TODO ugly code: this should be in properties file - https://stackoverflow.com/questions/3697449
+    public static final String VERSION = "2.0-SNAPSHOT"; //TODO ugly code: this should be in properties file - https://stackoverflow.com/questions/3697449
     //TODO ugly code: add missing fix version (update release script to increment minor version, rather than major)
 
     public static void main(String[] args) {

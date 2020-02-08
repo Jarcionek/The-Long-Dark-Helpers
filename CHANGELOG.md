@@ -1,3 +1,5 @@
+##### 2.0 (not yet released)
+
 ##### 1.3 (08/02/2020)
 
 * application window now has a title with version
