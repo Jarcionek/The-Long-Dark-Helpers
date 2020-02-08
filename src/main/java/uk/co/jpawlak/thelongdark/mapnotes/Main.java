@@ -66,7 +66,9 @@ public class Main {
     }
 
     private static void migrateSavedMaps(SettingsSerialiser settingsSerialiser, MapSerialiser mapSerialiser) {
-        if (!settingsSerialiser.settingsExist()) { // saves migration from 1.1
+        String lastUsedVersion = settingsSerialiser.settingsExist() ? settingsSerialiser.load().getVersion() : "1.1";
+
+        if (lastUsedVersion.equals("1.1")) {
             Stream.of(SAVED_MAPS_FOLDER.listFiles())
                     .map(mapSerialiser::loadAndMigrate)
                     .forEach(mapSerialiser::save);
