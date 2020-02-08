@@ -59,7 +59,8 @@ public class Main {
         }
 
         FileChooser fileChooser = new FileChooser();
-        MapWindowManager mapWindowManager = new MapWindowManager(fileChooser, mapSerialiser);
+        NoteWindowManager noteWindowManager = new NoteWindowManager(settingsSerialiser, mapSerialiser);
+        MapWindowManager mapWindowManager = new MapWindowManager(fileChooser, mapSerialiser, noteWindowManager);
 
         mapWindowManager.create();
     }

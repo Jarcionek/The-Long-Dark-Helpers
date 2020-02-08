@@ -11,8 +11,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -25,12 +23,13 @@ import java.util.function.Consumer;
 public class MapPanel extends JLabel {
 
     private final Map map;
-
     private final MapSerialiser mapSerialiser;
+    private final NoteWindowManager noteWindowManager;
 
-    public MapPanel(Map map, MapSerialiser mapSerialiser) {
+    public MapPanel(Map map, MapSerialiser mapSerialiser, NoteWindowManager noteWindowManager) {
         this.map = map;
         this.mapSerialiser = mapSerialiser;
+        this.noteWindowManager = noteWindowManager;
 
         BufferedImage image = loadImage(map.getImageLocation());
         ImageIcon imageIcon = new ImageIcon(image);
@@ -53,11 +52,7 @@ public class MapPanel extends JLabel {
             @Override
             public void mousePressed(MouseEvent event) {
                 if (event.getButton() == MouseEvent.BUTTON1) {
-                    JTextArea textArea = new JTextArea(marker.getNote(), 40, 60); //TODO this should be more flexible
-                    JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Note", JOptionPane.PLAIN_MESSAGE); //TODO should be relative to frame
-                    String newText = textArea.getText();
-                    marker.setNote(newText.trim().isEmpty() ? null : newText);
-                    mapSerialiser.save(map);
+                    noteWindowManager.openNote(marker, map);
                 }
                 if (event.getButton() == MouseEvent.BUTTON3) {
                     JMenuItem deleteMarkerMenuItem = new JMenuItem("Delete");

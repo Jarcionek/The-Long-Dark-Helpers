@@ -17,10 +17,12 @@ public class MapWindowManager {
 
     private final FileChooser fileChooser;
     private final MapSerialiser mapSerialiser;
+    private final NoteWindowManager noteWindowManager;
 
-    public MapWindowManager(FileChooser fileChooser, MapSerialiser mapSerialiser) {
+    public MapWindowManager(FileChooser fileChooser, MapSerialiser mapSerialiser, NoteWindowManager noteWindowManager) {
         this.fileChooser = fileChooser;
         this.mapSerialiser = mapSerialiser;
+        this.noteWindowManager = noteWindowManager;
     }
 
     public void create() {
@@ -81,7 +83,7 @@ public class MapWindowManager {
     }
 
     private void createMapPanelAndAddToFrame(JFrame frame, Map map) {
-        MapPanel mapPanel = new MapPanel(map, mapSerialiser);
+        MapPanel mapPanel = new MapPanel(map, mapSerialiser, noteWindowManager);
         JScrollPane scrollPane = new JScrollPane(mapPanel);
         scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_SENSITIVITY);
         scrollPane.getHorizontalScrollBar().setUnitIncrement(SCROLL_SENSITIVITY);
