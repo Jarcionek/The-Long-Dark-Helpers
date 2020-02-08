@@ -31,3 +31,4 @@ git commit -m "prepare for next development iteration"
 # GIT PUSH
 echo "MANUAL STEP REQUIRED!!!!!"
 echo "git push && git push --tags"
+echo "upload file to https://drive.google.com/open?id=1a-Tr_NBwtsMtFzHucmmitY7k2Cus0NJt"
