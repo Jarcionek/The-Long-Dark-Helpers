@@ -10,30 +10,30 @@ public class SaveBackuper {
 
     public static final String USER_NAME = System.getProperty("user.name");
 
-    public static final String SAVE_NAME = "challenge5";
-    public static final File SAVE_FILE = new File("c:\\Users\\" + USER_NAME + "\\AppData\\Local\\Hinterland\\TheLongDark\\" + SAVE_NAME);
     public static final File BACKUP_DIRECTORY = new File("c:\\Users\\" + USER_NAME + "\\Desktop\\TLD backups");
     public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmmss");
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        if (!SAVE_FILE.exists()) {
+        String saveName = args[0];
+        File saveFile = new File("c:\\Users\\" + USER_NAME + "\\AppData\\Local\\Hinterland\\TheLongDark\\" + saveName);
+        if (!saveFile.exists()) {
             throw new IllegalArgumentException("provide the existing filename to watch!");
         }
 
         BACKUP_DIRECTORY.mkdirs();
 
-        long lastModified = SAVE_FILE.lastModified();
+        long lastModified = saveFile.lastModified();
         while (true) {
             Thread.sleep(5000);
 
-            if (SAVE_FILE.lastModified() == lastModified) {
+            if (saveFile.lastModified() == lastModified) {
                 log("-");
                 continue;
             }
 
-            lastModified = SAVE_FILE.lastModified();
-            File backupFile = new File(BACKUP_DIRECTORY, SAVE_FILE.getName() + "-" + DATE_FORMAT.format(lastModified));
-            Files.copy(SAVE_FILE.toPath(), backupFile.toPath());
+            lastModified = saveFile.lastModified();
+            File backupFile = new File(BACKUP_DIRECTORY, saveFile.getName() + "-" + DATE_FORMAT.format(lastModified));
+            Files.copy(saveFile.toPath(), backupFile.toPath());
             log("backup created");
         }
     }
