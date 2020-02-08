@@ -60,7 +60,7 @@ public class Main {
 
         FileChooser fileChooser = new FileChooser();
         NoteWindowManager noteWindowManager = new NoteWindowManager(settingsSerialiser, mapSerialiser);
-        MapWindowManager mapWindowManager = new MapWindowManager(fileChooser, mapSerialiser, noteWindowManager);
+        MapWindowManager mapWindowManager = new MapWindowManager(fileChooser, settingsSerialiser, mapSerialiser, noteWindowManager);
 
         mapWindowManager.create();
     }

@@ -2,6 +2,9 @@ package uk.co.jpawlak.thelongdark.mapnotes;
 
 import uk.co.jpawlak.thelongdark.mapnotes.serializable.Map;
 import uk.co.jpawlak.thelongdark.mapnotes.serializable.MapSerialiser;
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.Settings;
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.SettingsSerialiser;
+import uk.co.jpawlak.thelongdark.mapnotes.serializable.WindowSettings;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -9,6 +12,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 
 public class MapWindowManager {
@@ -16,11 +23,13 @@ public class MapWindowManager {
     private static final int SCROLL_SENSITIVITY = 15;
 
     private final FileChooser fileChooser;
+    private final SettingsSerialiser settingsSerialiser;
     private final MapSerialiser mapSerialiser;
     private final NoteWindowManager noteWindowManager;
 
-    public MapWindowManager(FileChooser fileChooser, MapSerialiser mapSerialiser, NoteWindowManager noteWindowManager) {
+    public MapWindowManager(FileChooser fileChooser, SettingsSerialiser settingsSerialiser, MapSerialiser mapSerialiser, NoteWindowManager noteWindowManager) {
         this.fileChooser = fileChooser;
+        this.settingsSerialiser = settingsSerialiser;
         this.mapSerialiser = mapSerialiser;
         this.noteWindowManager = noteWindowManager;
     }
@@ -77,8 +86,30 @@ public class MapWindowManager {
         });
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
+
+        //TODO ugly code: copy-paste of NoteWindowManager code
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                saveMapWindowSettings(frame.getLocation(), frame.getSize());
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                saveMapWindowSettings(frame.getLocation(), frame.getSize());
+            }
+        });
+
+        //TODO ugly code: copy-paste of NoteWindowManager code
+        WindowSettings mapWindowSettings = settingsSerialiser.load().getMapWindowSettings();
+        if (mapWindowSettings == null) {
+            frame.setSize(new Dimension(800, 600));
+            frame.setLocationRelativeTo(null);
+        } else {
+            frame.setSize(mapWindowSettings.getWidth(), mapWindowSettings.getHeight());
+            frame.setLocation(mapWindowSettings.getX(), mapWindowSettings.getY());
+        }
+
         frame.setVisible(true);
     }
 
@@ -89,6 +120,13 @@ public class MapWindowManager {
         scrollPane.getHorizontalScrollBar().setUnitIncrement(SCROLL_SENSITIVITY);
         frame.setContentPane(scrollPane);
         frame.revalidate();
+    }
+
+    //TODO ugly code: copy-paste of NoteWindowManager code
+    private void saveMapWindowSettings(Point location, Dimension size) {
+        Settings settings = settingsSerialiser.load();
+        settings.setMapWindowSettings(new WindowSettings(location.x, location.y, size.width, size.height));
+        settingsSerialiser.save(settings);
     }
 
 }
