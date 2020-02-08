@@ -17,7 +17,11 @@ Left or right click an existing marker to interact with it.
 
 ## Installation
 
-Simply download and run jar file. You need to have [Java](https://www.java.com/en/download/) installed.
+Simply download and run the jar file. You need to have [Java](https://www.java.com/en/download/) installed.
+
+There is no really any installation - no shortcuts will be added to the desktop or the Start menu, nothing will be added
+to the Program Files folders or to the Windows registry. The program will create a folder in its current directory
+and all data it saves will be in this folder.
 
 ## Releases
 
