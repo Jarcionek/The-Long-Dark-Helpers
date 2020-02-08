@@ -51,6 +51,10 @@ public class Main {
         if (!isFreshInstallation) {
             migrateSavedMaps(settingsSerialiser, mapSerialiser);
         }
+        if (!settingsSerialiser.settingsExist()) {
+            //TODO ugly code: all this migration code is a mess...
+            settingsSerialiser.save(new Settings(VERSION));
+        }
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -66,13 +70,18 @@ public class Main {
     }
 
     private static void migrateSavedMaps(SettingsSerialiser settingsSerialiser, MapSerialiser mapSerialiser) {
-        String lastUsedVersion = settingsSerialiser.settingsExist() ? settingsSerialiser.load().getVersion() : "1.1";
+        String lastUsedVersion;
+        if (settingsSerialiser.settingsExist()) {
+            lastUsedVersion = settingsSerialiser.load().getVersion();
+        } else {
+            lastUsedVersion = "1.1";
+            settingsSerialiser.save(new Settings(VERSION));
+        }
 
         if (lastUsedVersion.equals("1.1")) {
             Stream.of(SAVED_MAPS_FOLDER.listFiles())
                     .map(mapSerialiser::loadAndMigrate)
                     .forEach(mapSerialiser::save);
-            settingsSerialiser.save(new Settings(VERSION));
         }
     }
 
