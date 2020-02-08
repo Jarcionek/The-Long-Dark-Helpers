@@ -33,6 +33,7 @@ public class NoteWindowManager {
     private final MapSerialiser mapSerialiser;
 
     private JFrame frame;
+    private Marker marker;
 
     public NoteWindowManager(SettingsSerialiser settingsSerialiser, MapSerialiser mapSerialiser) {
         this.settingsSerialiser = settingsSerialiser;
@@ -42,9 +43,17 @@ public class NoteWindowManager {
     //TODO ugly code: this class should not have access to the entire Map object
     public synchronized void openNote(Marker marker, Map map) {
         if (frame != null) {
-            frame.dispose();
+            this.frame.dispose();
         }
-        frame = createFrame(marker, map);
+        this.frame = createFrame(marker, map);
+        this.marker = marker;
+    }
+
+    public synchronized void closeNoteIfOpen(Marker marker) {
+        if (this.marker == marker) {
+            this.frame.dispose();
+            this.frame = null;
+        }
     }
 
     //TODO nice to have: help in frame menu bar informing about CTRL+S and ESC?
@@ -96,6 +105,7 @@ public class NoteWindowManager {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowDeactivated(WindowEvent e) {
+                //TODO ugly code: this is saving far too often - if there was no change or if the marker was deleted
                 saveMap(frame, textArea, marker, map);
             }
         });
