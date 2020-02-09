@@ -1,5 +1,7 @@
 ##### 2.0 (not yet released)
 
+* confirmation popup when deleting a marker with a note is now centered at the marker
+
 ##### 1.3 (08/02/2020)
 
 * application window now has a title with version

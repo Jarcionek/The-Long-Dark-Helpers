@@ -59,7 +59,7 @@ public class MapPanel extends JLabel {
                     deleteMarkerMenuItem.addActionListener(action -> {
                         if (marker.hasNote()) {
                             int choice = JOptionPane.showConfirmDialog(
-                                    MapPanel.this, //TODO should be relative to frame
+                                    markerLabel,
                                     "This marker contains a note, are you sure you want to delete it?",
                                     "Confirmation",
                                     JOptionPane.YES_NO_OPTION,
