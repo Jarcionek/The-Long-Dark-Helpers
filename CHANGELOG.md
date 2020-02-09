@@ -2,6 +2,7 @@
 
 * confirmation popup when deleting a marker with a note is now centered at the marker
 * note window is now closed when a new map is loaded
+* asterisk now shows correctly in the note window title when only one character has been modified
 
 ##### 1.3 (08/02/2020)
 
