@@ -120,6 +120,8 @@ public class MapWindowManager {
     }
 
     private void createMapPanelAndAddToFrame(JFrame frame, Map map) {
+        noteWindowManager.close();
+
         MapPanel mapPanel = new MapPanel(map, mapSerialiser, noteWindowManager);
         JScrollPane scrollPane = new JScrollPane(mapPanel);
         scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_SENSITIVITY);

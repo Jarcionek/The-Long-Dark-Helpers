@@ -56,6 +56,13 @@ public class NoteWindowManager {
         }
     }
 
+    public synchronized void close() {
+        if (frame != null) {
+            this.frame.dispose();
+            this.frame = null;
+        }
+    }
+
     //TODO nice to have: help in frame menu bar informing about CTRL+S and ESC?
     private JFrame createFrame(Marker marker, Map map) {
         JFrame frame = new JFrame(Main.APPLICATION_NAME + " - Note");
