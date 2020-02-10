@@ -1,3 +1,5 @@
+##### 1.4.0 (not yet released)
+
 ##### 1.3.1 (10/02/2020)
 
 * confirmation popup when deleting a marker with a note is now centered at the marker
