@@ -27,7 +27,7 @@ public class Main {
     public static final File MAPS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Maps Images");
     public static final File MARKERS_IMAGES_FOLDER = new File(MAIN_FOLDER, "Markers Images");
 
-    public static final String VERSION = "2.0-SNAPSHOT"; //TODO ugly code: this should be in properties file - https://stackoverflow.com/questions/3697449
+    public static final String VERSION = "1.3.1"; //TODO ugly code: this should be in properties file - https://stackoverflow.com/questions/3697449
 
     public static void main(String[] args) {
         boolean isFreshInstallation = MAIN_FOLDER.mkdirs();
