@@ -21,7 +21,7 @@ mvn clean compile assembly:single
 mv "target/TheLongDarkHelpers-${version}-jar-with-dependencies.jar" "target/TheLongDarkHelpers-${version}.jar"
 
 # PREPARE FOR NEXT ITERATION
-nextVersion=$((${version%%.*} + 1)).0
+nextVersion=$(./increment_version.sh -m ${version})
 sed -i "s|^    <version>.*</version>|    <version>${nextVersion}-SNAPSHOT</version>|" pom.xml
 sed -i "1s|^|##### ${nextVersion} (not yet released)\n\n|" CHANGELOG.md
 sed -i "s|^    public static final String VERSION = ".*";|    public static final String VERSION = \"${nextVersion}-SNAPSHOT\";|" src/main/java/uk/co/jpawlak/thelongdark/mapnotes/Main.java
